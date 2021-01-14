@@ -23,7 +23,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->redis = new Client(
             sprintf('tcp://%s:%s', $_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']),
@@ -35,7 +35,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->redis);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         $queues = $this->redis->smembers('queues');
 

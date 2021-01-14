@@ -21,7 +21,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->context = $this->prophesize(AmqpContext::class);
 

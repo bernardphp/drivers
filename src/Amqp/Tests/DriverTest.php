@@ -28,7 +28,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->channel = $this->prophesize(AMQPChannel::class);
         $this->channel->close()->willReturn(null);

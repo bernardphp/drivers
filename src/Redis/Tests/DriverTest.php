@@ -20,7 +20,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->redis = $this->prophesize(\Redis::class);
 

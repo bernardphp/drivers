@@ -39,7 +39,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $skipCleanup = false;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->skipCleanup = false;
 
@@ -54,7 +54,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->amqp, self::EXCHANGE);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         if (!$this->channel) {
             $this->channel = $this->amqp->channel();

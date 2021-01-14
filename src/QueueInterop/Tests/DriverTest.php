@@ -25,7 +25,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->context = $this->prophesize(PsrContext::class);
 

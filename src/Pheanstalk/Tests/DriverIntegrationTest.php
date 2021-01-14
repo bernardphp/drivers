@@ -25,14 +25,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp()
+    public function setUp() : void
     {
         $this->pheanstalk = new Pheanstalk($_ENV['BEANSTALKD_HOST'], $_ENV['BEANSTALKD_PORT']);
 
         $this->driver = new Driver($this->pheanstalk);
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         $tubes = $this->pheanstalk->listTubes();
 

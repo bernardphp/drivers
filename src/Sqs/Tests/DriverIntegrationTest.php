@@ -30,7 +30,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $queues = [];
 
-    public function setUp()
+    public function setUp() : void
     {
         $accessKey = getenv('SQS_ACCESS_KEY');
         $secretKey = getenv('SQS_SECRET_KEY');
@@ -84,7 +84,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         return [$queueName, $result['QueueUrl']];
     }
 
-    public function tearDown()
+    public function tearDown() : void
     {
         foreach ($this->queues as $queue) {
             $result = $this->sqs->getQueueUrl(['QueueName' => $queue]);
