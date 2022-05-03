@@ -2,7 +2,14 @@
     "name": "bernard/predis-driver",
     "description": "Predis driver for Bernard",
     "license": "MIT",
-    "keywords": ["message queue", "message", "queue", "bernard", "redis", "predis"],
+    "keywords": [
+        "message queue",
+        "message",
+        "queue",
+        "bernard",
+        "redis",
+        "predis"
+    ],
     "homepage": "https://github.com/bernardphp/predis-driver",
     "authors": [
         {
@@ -14,12 +21,12 @@
         }
     ],
     "require": {
-        "php": "^5.6 || ^7.0",
+        "php": "^7.4 || ^8.0",
         "bernard/bernard": "dev-master",
         "predis/predis": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^5.7 || ^6.0 || ^7.0"
+        "phpunit/phpunit": "^8.0 || ^9.0"
     },
     "autoload": {
         "psr-4": {
@@ -33,7 +40,6 @@
         "sort-packages": true
     },
     "scripts": {
-        "clean": "rm -rf build/ vendor/",
         "test": "vendor/bin/phpunit -v",
         "test-integration": "vendor/bin/phpunit -v --group integration"
     },
