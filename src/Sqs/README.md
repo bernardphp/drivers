@@ -9,8 +9,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/sqs-driver
+```shell
+composer require bernard/sqs-driver
 ```
 
 
@@ -45,4 +45,4 @@ $driver = new Driver($client, [
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).

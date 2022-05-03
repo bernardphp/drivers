@@ -1,5 +1,6 @@
 /.direnv/
 /build/
+/docker-compose.override.yaml
 
 # Ignore these files in subdirectories as well
 .php-cs-fixer.php

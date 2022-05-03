@@ -9,8 +9,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/pheanstalk-driver
+```shell
+composer require bernard/pheanstalk-driver
 ```
 
 
@@ -29,4 +29,4 @@ $driver = new Driver($pheanstalk);
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).

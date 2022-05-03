@@ -9,8 +9,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/predis-driver
+```shell
+composer require bernard/predis-driver
 ```
 
 
@@ -35,4 +35,4 @@ $driver = new Driver($redis);
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).
