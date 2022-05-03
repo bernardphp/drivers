@@ -11,16 +11,20 @@
       system:
         let
           pkgs = import nixpkgs { inherit system; };
+          php = (pkgs.php.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug all.redis ]));
         in
           {
-            devShell = pkgs.mkShell {
+            devShells.default = pkgs.mkShell {
               buildInputs = with pkgs;
                 [
                   git
                   gnumake
-                  (php.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug all.redis ]))
-                  php.packages.composer
-                ];
+                  # (php.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug all.redis ]))
+                  # php.packages.composer
+                  php.packages.phpstan
+                  php.packages.php-cs-fixer
+                  # php.packages.psalm
+                ] ++ [ php php.packages.composer ];
             };
           }
     );
