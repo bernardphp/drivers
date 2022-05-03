@@ -121,6 +121,116 @@ parameters:
 			path: src/Amqp/Tests/DriverTest.php
 
 		-
+			message: "#^Call to method add\\(\\) on an unknown class google\\\\appengine\\\\api\\\\taskqueue\\\\PushTask\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Instantiated class google\\\\appengine\\\\api\\\\taskqueue\\\\PushTask not found\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:countMessages\\(\\) should return int but return statement is missing\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:popMessage\\(\\) should return array but return statement is missing\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:\\$queueMap has no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Driver.php
+
+		-
+			message: "#^Access to static property \\$messages on an unknown class google\\\\appengine\\\\api\\\\taskqueue\\\\PushTask\\.$#"
+			count: 5
+			path: src/AppEngine/Tests/DriverTest.php
+
+		-
+			message: "#^Instantiated class google\\\\appengine\\\\api\\\\taskqueue\\\\PushTask not found\\.$#"
+			count: 3
+			path: src/AppEngine/Tests/DriverTest.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testItQueuesPushTask\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/DriverTest.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testItUsesDefaultEndpointWhenAliasArentThere\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/DriverTest.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testListQueues\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/DriverTest.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:__construct\\(\\) has parameter \\$url_path with no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:add\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:add\\(\\) has parameter \\$queueName with no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:\\$messages has no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:\\$options has no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:\\$query_data has no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:\\$url_path has no type specified\\.$#"
+			count: 1
+			path: src/AppEngine/Tests/Fixtures/PushTask.php
+
+		-
 			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/IronMQ/Driver.php

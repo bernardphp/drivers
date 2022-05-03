@@ -1,0 +1,51 @@
+{
+    "name": "bernard/appengine-driver",
+    "description": "Google App Engine driver for Bernard",
+    "license": "MIT",
+    "keywords": [
+        "message queue",
+        "message",
+        "queue",
+        "bernard",
+        "google",
+        "appengine"
+    ],
+    "homepage": "https://github.com/bernardphp/appengine-driver",
+    "authors": [
+        {
+            "name": "Henrik Bjornskov"
+        },
+        {
+            "name": "Márk Sági-Kazár",
+            "email": "mark.sagikazar@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.4 || ^8.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0 || ^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bernard\\Driver\\AppEngine\\": ""
+        },
+        "exclude-from-classmap": [
+            "/Tests/"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit -v",
+        "test-integration": "vendor/bin/phpunit -v --group integration"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
+    },
+    "prefer-stable": true,
+    "minimum-stability": "dev"
+}
