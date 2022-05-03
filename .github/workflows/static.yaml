@@ -24,7 +24,7 @@ jobs:
       - name: Set up Cachix
         uses: cachix/cachix-action@v10
         with:
-          name: drivers
+          name: bernardphp-drivers
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Download dependencies
@@ -50,7 +50,7 @@ jobs:
       - name: Set up Cachix
         uses: cachix/cachix-action@v10
         with:
-          name: drivers
+          name: bernardphp-drivers
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
 
       - name: Download dependencies
