@@ -21,10 +21,15 @@
                   gnumake
                   # (php.withExtensions ({ enabled, all }: enabled ++ [ all.xdebug all.redis ]))
                   # php.packages.composer
+                  # php.packages.phpstan
+                  # php.packages.php-cs-fixer
+                  # php.packages.psalm
+                ] ++ [
+                  php
+                  php.packages.composer
                   php.packages.phpstan
                   php.packages.php-cs-fixer
-                  # php.packages.psalm
-                ] ++ [ php php.packages.composer ];
+                ];
             };
           }
     );
