@@ -1,6 +1,5 @@
 # Bernard Drivers
 
-[![Latest Version](https://img.shields.io/github/release/bernardphp/drivers.svg?style=flat-square)](https://github.com/bernardphp/drivers/releases)
 [![GitHub Workflow Status](https://img.shields.io/github/workflow/status/bernardphp/drivers/CI?style=flat-square)](https://github.com/bernardphp/drivers/actions?query=workflow%3ACI)
 [![Total Downloads](https://img.shields.io/packagist/dt/bernard/drivers.svg?style=flat-square)](https://packagist.org/packages/bernard/drivers)
 
@@ -11,8 +10,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/drivers
+```shell
+composer require bernard/drivers
 ```
 
 
@@ -27,32 +26,31 @@ $ composer require bernard/drivers
 - [Redis](src/Redis)
 
 
-## Testing
+## Development
 
-### Running tests locally
+When all coding is done, please run the test suite:
 
-Build the provided `Dockerfile`:
-
-```bash
-$ docker build -t bernardphp .
+```shell
+composer test
 ```
 
-Start the services using Docker Compose:
+To run the integration test suite as well: First, start the services using Docker Compose:
 
-```bash
-$ docker-compose up -d
+```shell
+docker-compose up -d
 ```
 
-Wait for them to start. Then execute the test suites:
+Wait for them to start. Then execute the integration test suite:
 
-```bash
-$ docker run --rm -it -v $PWD:/app -w /app --network drivers_default bernard vendor/bin/phpunit
-$ docker run --rm -it -v $PWD:/app -w /app --network drivers_default bernard vendor/bin/phpunit --group integration
+```shell
+composer test-integration
 ```
 
-`drivers_default` is the network name created by Docker Compose.
+For the best developer experience, install [Nix](https://builtwithnix.org/) and [direnv](https://direnv.net/).
+
+Alternatively, install PHP (and the required extensions) and Composer manually or using a package manager.
 
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).
