@@ -9,7 +9,7 @@
         "bernard",
         "amqp"
     ],
-    "homepage": "https://github.com/bernardphp/ironmq-driver",
+    "homepage": "https://github.com/bernardphp/amqp-driver",
     "authors": [
         {
             "name": "Henrik Bjornskov"
