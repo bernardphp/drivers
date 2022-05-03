@@ -9,8 +9,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/queue-interop-driver
+```shell
+composer require bernard/queue-interop-driver
 ```
 
 
@@ -28,4 +28,4 @@ $driver = new Driver($context);
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).

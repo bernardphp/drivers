@@ -9,8 +9,8 @@
 
 Via Composer
 
-```bash
-$ composer require bernard/ironmq-driver
+```shell
+composer require bernard/ironmq-driver
 ```
 
 
@@ -32,4 +32,4 @@ $driver = new Driver($connection);
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE) for more information.
+The project is licensed under the [MIT License](LICENSE).
