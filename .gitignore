@@ -1,8 +1,10 @@
-.php_cs
-.php_cs.cache
+/.direnv/
 /build/
 
 # Ignore these files in subdirectories as well
+.php-cs-fixer.php
+.php-cs-fixer.cache
+.phpunit.result.cache
 composer.lock
 phpunit.xml
 vendor/

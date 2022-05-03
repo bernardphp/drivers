@@ -29,9 +29,7 @@ final class Driver implements \Bernard\Driver
     private $defaultMessageProperties;
 
     /**
-     * @param AbstractConnection $connection
-     * @param string             $exchange
-     * @param array              $defaultMessageProperties
+     * @param string $exchange
      */
     public function __construct(AbstractConnection $connection, $exchange, array $defaultMessageProperties = [])
     {
@@ -65,7 +63,7 @@ final class Driver implements \Bernard\Driver
      */
     public function countMessages($queueName)
     {
-        list(, $messageCount) = $this->getChannel()->queue_declare($queueName, true);
+        [, $messageCount] = $this->getChannel()->queue_declare($queueName, true);
 
         return $messageCount;
     }

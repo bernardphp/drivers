@@ -11,9 +11,6 @@ final class Driver implements \Bernard\Driver
 {
     private $pheanstalk;
 
-    /**
-     * @param PheanstalkInterface $pheanstalk
-     */
     public function __construct(PheanstalkInterface $pheanstalk)
     {
         $this->pheanstalk = $pheanstalk;

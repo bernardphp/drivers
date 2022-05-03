@@ -18,17 +18,14 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->redis = $this->prophesize(ClientInterface::class);
 
         $this->driver = new Driver($this->redis->reveal());
     }
 
-    /**
-     * @test
-     */
-    public function it_is_a_driver()
+    public function testItIsADriver()
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
