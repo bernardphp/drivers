@@ -12,8 +12,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
-    const QUEUE = 'queue';
-    const MESSAGE = 'message';
+    public const QUEUE = 'queue';
+    public const MESSAGE = 'message';
 
     /**
      * @var PsrContext|ObjectProphecy
@@ -25,41 +25,29 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->context = $this->prophesize(PsrContext::class);
 
         $this->driver = new Driver($this->context->reveal());
     }
 
-    /**
-     * @test
-     */
-    public function it_is_a_driver()
+    public function testItIsADriver()
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues()
+    public function testItListsQueues()
     {
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $this->assertSame(0, $this->driver->countMessages(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue()
+    public function testItPushesAMessageToAQueue()
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -75,10 +63,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
     }
 
-    /**
-     * @test
-     */
-    public function it_pops_messages_from_a_queue()
+    public function testItPopsMessagesFromAQueue()
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -97,10 +82,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_an_empty_message_when_popping_messages_from_an_empty_queue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -128,18 +110,12 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->acknowledgeMessage(self::QUEUE, $message);
     }
 
-    /**
-     * @test
-     */
-    public function it_peeks_a_queue()
+    public function testItPeeksAQueue()
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_exposes_info()
+    public function testItExposesInfo()
     {
         $this->assertEquals([], $this->driver->info());
     }

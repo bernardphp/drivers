@@ -9,7 +9,7 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
 {
-    const QUEUE = 'queue';
+    public const QUEUE = 'queue';
 
     /**
      * @var AmqpContext|ObjectProphecy
@@ -21,17 +21,14 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->context = $this->prophesize(AmqpContext::class);
 
         $this->driver = new Driver($this->context->reveal());
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_queue()
+    public function testItCreatesAQueue()
     {
         $queue = $this->prophesize(AmqpQueue::class);
         $queue->addFlag(AmqpQueue::FLAG_DURABLE)->shouldBeCalled();
@@ -42,10 +39,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->createQueue(self::QUEUE);
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $queue = $this->prophesize(AmqpQueue::class);
 
@@ -55,10 +49,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(123, $this->driver->countMessages(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_removes_a_queue()
+    public function testItRemovesAQueue()
     {
         $queue = $this->prophesize(AmqpQueue::class);
         $queue->addFlag(AmqpQueue::FLAG_DURABLE)->shouldBeCalled();

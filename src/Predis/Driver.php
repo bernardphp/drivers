@@ -10,13 +10,10 @@ use Predis\Command\ServerInfo;
  */
 final class Driver implements \Bernard\Driver
 {
-    const QUEUE_PREFIX = 'queue:';
+    public const QUEUE_PREFIX = 'queue:';
 
     private $redis;
 
-    /**
-     * @param ClientInterface $redis
-     */
     public function __construct(ClientInterface $redis)
     {
         $this->redis = $redis;
@@ -59,7 +56,7 @@ final class Driver implements \Bernard\Driver
      */
     public function popMessage($queueName, $duration = 5)
     {
-        list(, $message) = $this->redis->blpop($this->resolveKey($queueName), $duration) ?: null;
+        [, $message] = $this->redis->blpop($this->resolveKey($queueName), $duration) ?: null;
 
         return [$message, null];
     }

@@ -7,21 +7,19 @@ use Aws\Sqs\SqsClient;
 use Bernard\Driver\AbstractPrefetchDriver;
 
 /**
- * Implements a Driver for use with AWS SQS client API: https://aws.amazon.com/sqs/
+ * Implements a Driver for use with AWS SQS client API: https://aws.amazon.com/sqs/.
  */
 final class Driver extends AbstractPrefetchDriver
 {
-    const AWS_SQS_FIFO_SUFFIX = '.fifo';
-    const AWS_SQS_EXCEPTION_BAD_REQUEST = 400;
-    const AWS_SQS_EXCEPTION_NOT_FOUND = 404;
+    public const AWS_SQS_FIFO_SUFFIX = '.fifo';
+    public const AWS_SQS_EXCEPTION_BAD_REQUEST = 400;
+    public const AWS_SQS_EXCEPTION_NOT_FOUND = 404;
 
     private $sqs;
     private $queueUrls;
 
     /**
-     * @param SqsClient $sqs
-     * @param array     $queueUrls
-     * @param int|null  $prefetch
+     * @param int|null $prefetch
      */
     public function __construct(SqsClient $sqs, array $queueUrls = [], $prefetch = null)
     {
@@ -44,7 +42,7 @@ final class Driver extends AbstractPrefetchDriver
         }
 
         foreach ($queueUrls as $queueUrl) {
-            if (in_array($queueUrl, $this->queueUrls)) {
+            if (\in_array($queueUrl, $this->queueUrls)) {
                 continue;
             }
 
@@ -129,7 +127,7 @@ final class Driver extends AbstractPrefetchDriver
      */
     private function endsWith($haystack, $needle)
     {
-        $length = strlen($needle);
+        $length = \strlen($needle);
         if ($length === 0) {
             return true;
         }

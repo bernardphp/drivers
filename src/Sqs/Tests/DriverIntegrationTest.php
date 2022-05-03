@@ -11,7 +11,7 @@ use Bernard\Driver\Sqs\Driver;
  */
 final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 {
-    const MESSAGE = 'message';
+    public const MESSAGE = 'message';
 
     /**
      * @var SqsClient
@@ -30,7 +30,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $queues = [];
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $accessKey = getenv('SQS_ACCESS_KEY');
         $secretKey = getenv('SQS_SECRET_KEY');
@@ -42,11 +42,11 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 
         $this->sqs = new SqsClient([
             'credentials' => [
-                'key'     => $accessKey,
-                'secret'  => $secretKey,
+                'key' => $accessKey,
+                'secret' => $secretKey,
             ],
-            'region'  => $region,
-            'version' => '2012-11-05'
+            'region' => $region,
+            'version' => '2012-11-05',
         ]);
 
         $this->driver = new Driver($this->sqs);
@@ -55,7 +55,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     /**
      * Creates a queue name for a topic, also saves the queue name in the local cleanup queue.
      * It is necessary to use less deterministic names, because Amazon limits how queue names can be reused.
-     * (Have to wait 60 seconds after a queue is deleted)
+     * (Have to wait 60 seconds after a queue is deleted).
      *
      * @param string $topic
      *
@@ -64,7 +64,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     private function queueName($topic)
     {
         // PHP version is added so tests can run in parallel in CI
-        return $this->queues[] = sprintf('bernard_%s_%d_%s', $topic, PHP_VERSION_ID, uniqid());
+        return $this->queues[] = sprintf('bernard_%s_%d_%s', $topic, \PHP_VERSION_ID, uniqid());
     }
 
     private function createQueue($topic)
@@ -84,7 +84,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         return [$queueName, $result['QueueUrl']];
     }
 
-    public function tearDown() : void
+    protected function tearDown(): void
     {
         foreach ($this->queues as $queue) {
             $result = $this->sqs->getQueueUrl(['QueueName' => $queue]);
@@ -95,10 +95,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues()
+    public function testItListsQueues()
     {
         $queue = $this->createQueue('list');
 
@@ -109,11 +106,11 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         while ($retries < $retryLimit) {
             $queues = $this->driver->listQueues();
 
-            if (in_array($queue[0], $queues, true)) {
+            if (\in_array($queue[0], $queues, true)) {
                 break;
             }
 
-            $retries++;
+            ++$retries;
 
             sleep(1);
         }
@@ -121,10 +118,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertLessThan($retryLimit, $retries, 'Failed asserting queue creation within the retry limit');
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_queue()
+    public function testItCreatesAQueue()
     {
         $queue = $this->queueName('create');
 
@@ -134,10 +128,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($queue, $result->get('QueueUrl'));
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $queue = $this->createQueue('count');
 
@@ -158,10 +149,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(2, $this->driver->countMessages($queue[0]));
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue()
+    public function testItPushesAMessageToAQueue()
     {
         $queue = $this->createQueue('push');
 
@@ -179,10 +167,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $messages[0]['Body']);
     }
 
-    /**
-     * @test
-     */
-    public function it_pops_messages_from_a_queue()
+    public function testItPopsMessagesFromAQueue()
     {
         $queue = $this->createQueue('pop');
 
@@ -197,20 +182,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($message[1]);
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_an_empty_message_when_popping_messages_from_an_empty_queue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
     {
         $queue = $this->createQueue('pop_empty');
 
         $this->assertEquals([null, null], $this->driver->popMessage($queue[0], 1));
     }
 
-    /**
-     * @test
-     */
-    public function it_acknowledges_a_message()
+    public function testItAcknowledgesAMessage()
     {
         $queue = $this->createQueue('ack');
 
@@ -239,10 +218,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $result['Attributes']['ApproximateNumberOfMessages']);
     }
 
-    /**
-     * @test
-     */
-    public function it_removes_a_queue()
+    public function testItRemovesAQueue()
     {
         $queue = $this->createQueue('remove');
         $this->queues = [];

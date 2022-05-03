@@ -9,9 +9,9 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 class DriverTest extends \PHPUnit\Framework\TestCase
 {
-    const QUEUE = 'queue';
-    const URL = 'url';
-    const MESSAGE = 'message';
+    public const QUEUE = 'queue';
+    public const URL = 'url';
+    public const MESSAGE = 'message';
 
     /**
      * @var SqsClient|ObjectProphecy
@@ -23,25 +23,19 @@ class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->sqs = $this->prophesize(SqsClient::class);
 
         $this->driver = new Driver($this->sqs->reveal(), [self::QUEUE => self::URL]);
     }
 
-    /**
-     * @test
-     */
-    public function it_is_a_driver()
+    public function testItIsADriver()
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues_from_the_internal_cache()
+    public function testItListsQueuesFromTheInternalCache()
     {
         $result = $this->prophesize(ResultInterface::class);
         $result->get('QueueUrls')->willReturn(null);
@@ -54,10 +48,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    /**
-     * @test
-     */
-    public function it_prefetches_messages_from_a_queue()
+    public function testItPrefetchesMessagesFromAQueue()
     {
         $result = $this->prophesize(ResultInterface::class);
         $result->get('Messages')->willReturn([
@@ -66,9 +57,9 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         ]);
 
         $this->sqs->receiveMessage([
-            'QueueUrl'            => self::URL,
+            'QueueUrl' => self::URL,
             'MaxNumberOfMessages' => 10,
-            'WaitTimeSeconds'     => 5,
+            'WaitTimeSeconds' => 5,
         ])->willReturn($result);
 
         $driver = new Driver($this->sqs->reveal(), [self::QUEUE => self::URL], 10);
@@ -82,26 +73,17 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, '2'], $message);
     }
 
-    /**
-     * @test
-     */
-    public function it_peeks_a_queue()
+    public function testItPeeksAQueue()
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_exposes_info()
+    public function testItExposesInfo()
     {
         $this->assertEquals(['prefetch' => 2], $this->driver->info());
     }
 
-    /**
-     * @test
-     */
-    public function it_exposes_prefetch_info()
+    public function testItExposesPrefetchInfo()
     {
         $driver = new Driver($this->sqs->reveal(), [self::QUEUE => 'url'], 10);
 

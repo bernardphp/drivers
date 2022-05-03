@@ -10,8 +10,8 @@ use Predis\Client;
  */
 final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 {
-    const QUEUE = 'queue';
-    const MESSAGE = 'message';
+    public const QUEUE = 'queue';
+    public const MESSAGE = 'message';
 
     /**
      * @var Client
@@ -23,7 +23,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->redis = new Client(
             sprintf('tcp://%s:%s', $_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']),
@@ -35,7 +35,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->redis);
     }
 
-    public function tearDown() : void
+    protected function tearDown(): void
     {
         $queues = $this->redis->smembers('queues');
 
@@ -46,10 +46,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->redis->del(['queues']);
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues()
+    public function testItListsQueues()
     {
         $queues = [
             'failed',
@@ -66,10 +63,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_queue()
+    public function testItCreatesAQueue()
     {
         $this->driver->createQueue(self::QUEUE);
 
@@ -78,10 +72,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $this->redis->sadd('queues', [self::QUEUE]);
 
@@ -93,10 +84,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue()
+    public function testItPushesAMessageToAQueue()
     {
         $this->redis->sadd('queues', [self::QUEUE]);
 
@@ -107,10 +95,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(['bernard:queue:'.self::QUEUE, self::MESSAGE], $message);
     }
 
-    /**
-     * @test
-     */
-    public function it_pops_messages_from_a_queue()
+    public function testItPopsMessagesFromAQueue()
     {
         $this->redis->sadd('queues', [self::QUEUE]);
         $this->redis->rpush('queue:'.self::QUEUE, [self::MESSAGE]);
@@ -118,18 +103,12 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, null], $this->driver->popMessage(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_an_empty_message_when_popping_messages_from_an_empty_queue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
     {
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
     }
 
-    /**
-     * @test
-     */
-    public function it_peeks_a_queue()
+    public function testItPeeksAQueue()
     {
         $this->redis->sadd('queues', [self::QUEUE]);
         $this->redis->rpush('queue:'.self::QUEUE, [self::MESSAGE.'1']);
@@ -151,10 +130,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    /**
-     * @test
-     */
-    public function it_removes_a_queue()
+    public function testItRemovesAQueue()
     {
         $this->redis->sadd('queues', [self::QUEUE]);
         $this->redis->rpush('queue:'.self::QUEUE, [self::MESSAGE]);

@@ -2,16 +2,16 @@
 
 namespace Bernard\Driver\Amqp\Tests;
 
-use PhpAmqpLib\Channel\AMQPChannel;
 use Bernard\Driver\Amqp\Driver;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
-    const EXCHANGE = 'exchange';
-    const QUEUE = 'queue';
-    const MESSAGE = 'message';
+    public const EXCHANGE = 'exchange';
+    public const QUEUE = 'queue';
+    public const MESSAGE = 'message';
 
     /**
      * @var AbstractConnection|ObjectProphecy
@@ -28,7 +28,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->channel = $this->prophesize(AMQPChannel::class);
         $this->channel->close()->willReturn(null);
@@ -39,34 +39,22 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->amqp->reveal(), self::EXCHANGE);
     }
 
-    /**
-     * @test
-     */
-    public function it_is_a_driver()
+    public function testItIsADriver()
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues()
+    public function testItListsQueues()
     {
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    /**
-     * @test
-     */
-    public function it_peeks_a_queue()
+    public function testItPeeksAQueue()
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_exposes_info()
+    public function testItExposesInfo()
     {
         $this->assertEquals([], $this->driver->info());
     }

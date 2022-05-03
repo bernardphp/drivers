@@ -7,13 +7,10 @@ namespace Bernard\Driver\Redis;
  */
 final class Driver implements \Bernard\Driver
 {
-    const QUEUE_PREFIX = 'queue:';
+    public const QUEUE_PREFIX = 'queue:';
 
     private $redis;
 
-    /**
-     * @param \Redis $redis
-     */
     public function __construct(\Redis $redis)
     {
         $this->redis = $redis;
@@ -64,7 +61,7 @@ final class Driver implements \Bernard\Driver
         // "BLPOP" "bernard:queue:my-queue" "5"
         //
         // see https://github.com/nicolasff/phpredis/issues/158
-        list(, $message) = $this->redis->blPop([$this->resolveKey($queueName)], $duration) ?: null;
+        [, $message] = $this->redis->blPop([$this->resolveKey($queueName)], $duration) ?: null;
 
         return [$message, null];
     }

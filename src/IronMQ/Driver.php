@@ -13,7 +13,6 @@ final class Driver extends AbstractPrefetchDriver
     private $ironmq;
 
     /**
-     * @param IronMQ   $ironmq
      * @param int|null $prefetch
      */
     public function __construct(IronMQ $ironmq, $prefetch = null)
@@ -35,7 +34,7 @@ final class Driver extends AbstractPrefetchDriver
             $queueNames += $this->pluck($queues, 'name');
 
             // If we get 100 results the probability of another page is high.
-            if (count($queues) < 100) {
+            if (\count($queues) < 100) {
                 break;
             }
 
@@ -137,7 +136,6 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * The missing array_pluck but for objects array.
      *
-     * @param array  $objects
      * @param string $property
      *
      * @return array

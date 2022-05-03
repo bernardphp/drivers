@@ -2,8 +2,8 @@
 
 namespace Bernard\Driver\Amqp\Tests;
 
-use PhpAmqpLib\Channel\AMQPChannel;
 use Bernard\Driver\Amqp\Driver;
+use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Exception\AMQPProtocolException;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -13,9 +13,9 @@ use PhpAmqpLib\Message\AMQPMessage;
  */
 final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 {
-    const EXCHANGE = 'exchange';
-    const QUEUE = 'queue';
-    const MESSAGE = 'message';
+    public const EXCHANGE = 'exchange';
+    public const QUEUE = 'queue';
+    public const MESSAGE = 'message';
 
     /**
      * @var AMQPStreamConnection
@@ -39,7 +39,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      */
     private $skipCleanup = false;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->skipCleanup = false;
 
@@ -54,7 +54,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->amqp, self::EXCHANGE);
     }
 
-    public function tearDown() : void
+    protected function tearDown(): void
     {
         if (!$this->channel) {
             $this->channel = $this->amqp->channel();
@@ -78,10 +78,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->channel->basic_publish(new AMQPMessage($message), self::EXCHANGE, $queue);
     }
 
-    /**
-     * @test
-     */
-    public function it_creates_a_queue()
+    public function testItCreatesAQueue()
     {
         $queue = 'other-queue';
 
@@ -96,10 +93,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message->body);
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $count = 3;
 
@@ -113,10 +107,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($count, $this->driver->countMessages(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue()
+    public function testItPushesAMessageToAQueue()
     {
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
 
@@ -130,10 +121,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message->body);
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue_with_properties()
+    public function testItPushesAMessageToAQueueWithProperties()
     {
         $properties = ['content_type' => 'text'];
 
@@ -152,10 +140,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($properties, $message->get_properties());
     }
 
-    /**
-     * @test
-     */
-    public function it_pops_messages_from_a_queue()
+    public function testItPopsMessagesFromAQueue()
     {
         $this->publish();
 
@@ -166,18 +151,12 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, '1'], $this->driver->popMessage(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_an_empty_message_when_popping_messages_from_an_empty_queue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
     {
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
     }
 
-    /**
-     * @test
-     */
-    public function it_acknowledges_a_message()
+    public function testItAcknowledgesAMessage()
     {
         $this->publish();
 
@@ -200,10 +179,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $result);
     }
 
-    /**
-     * @test
-     */
-    public function it_removes_a_queue()
+    public function testItRemovesAQueue()
     {
         $this->skipCleanup = true;
 

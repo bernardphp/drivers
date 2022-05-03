@@ -8,8 +8,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
-    const QUEUE = 'queue';
-    const MESSAGE = 'message';
+    public const QUEUE = 'queue';
+    public const MESSAGE = 'message';
 
     /**
      * @var IronMQ|ObjectProphecy
@@ -21,25 +21,19 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $driver;
 
-    public function setUp() : void
+    protected function setUp(): void
     {
         $this->ironmq = $this->prophesize(IronMQ::class);
 
         $this->driver = new Driver($this->ironmq->reveal());
     }
 
-    /**
-     * @test
-     */
-    public function it_is_a_driver()
+    public function testItIsADriver()
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    /**
-     * @test
-     */
-    public function it_lists_queues()
+    public function testItListsQueues()
     {
         $this->ironmq->getQueues(0, 100)->willReturn([
             (object) ['name' => 'failed'],
@@ -52,30 +46,21 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    /**
-     * @test
-     */
-    public function it_counts_the_number_of_messages_in_a_queue()
+    public function testItCountsTheNumberOfMessagesInAQueue()
     {
         $this->ironmq->getQueue(self::QUEUE)->willReturn((object) ['size' => 4]);
 
         $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_pushes_a_message_to_a_queue()
+    public function testItPushesAMessageToAQueue()
     {
         $this->ironmq->postMessage(self::QUEUE, self::MESSAGE)->shouldBeCalled();
 
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
     }
 
-    /**
-     * @test
-     */
-    public function it_pops_messages_from_a_queue()
+    public function testItPopsMessagesFromAQueue()
     {
         $this->ironmq->reserveMessages(self::QUEUE, 2, IronMQ::GET_MESSAGE_TIMEOUT, 5)->willReturn([
             (object) ['body' => self::MESSAGE, 'id' => 1],
@@ -84,20 +69,14 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, 1], $this->driver->popMessage(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_returns_an_empty_message_when_popping_messages_from_an_empty_queue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
     {
         $this->ironmq->reserveMessages(self::QUEUE, 2, IronMQ::GET_MESSAGE_TIMEOUT, 5)->willReturn(null);
 
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_prefetches_messages_from_a_queue()
+    public function testItPrefetchesMessagesFromAQueue()
     {
         $this->ironmq->reserveMessages(self::QUEUE, 2, IronMQ::GET_MESSAGE_TIMEOUT, 5)->willReturn([
             (object) ['body' => self::MESSAGE, 'id' => 1],
@@ -108,20 +87,14 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, 2], $this->driver->popMessage(self::QUEUE));
     }
 
-    /**
-     * @test
-     */
-    public function it_acknowledges_a_message()
+    public function testItAcknowledgesAMessage()
     {
         $this->ironmq->deleteMessage(self::QUEUE, 'receipt')->shouldBeCalled();
 
         $this->driver->acknowledgeMessage(self::QUEUE, 'receipt');
     }
 
-    /**
-     * @test
-     */
-    public function it_peeks_a_queue()
+    public function testItPeeksAQueue()
     {
         $this->ironmq->peekMessages(self::QUEUE, 10)->willReturn([
             (object) ['body' => self::MESSAGE],
@@ -130,20 +103,14 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE], $this->driver->peekQueue(self::QUEUE, 10, 10));
     }
 
-    /**
-     * @test
-     */
-    public function it_removes_a_queue()
+    public function testItRemovesAQueue()
     {
         $this->ironmq->deleteQueue(self::QUEUE)->shouldBeCalled();
 
         $this->driver->removeQueue(self::QUEUE);
     }
 
-    /**
-     * @test
-     */
-    public function it_exposes_info()
+    public function testItExposesInfo()
     {
         $driver = new Driver($this->ironmq->reveal(), 10);
 

@@ -19,9 +19,6 @@ final class Driver implements \Bernard\Driver
      */
     private $consumers = [];
 
-    /**
-     * @param PsrContext $context
-     */
     public function __construct(PsrContext $context)
     {
         $this->context = $context;
@@ -123,7 +120,7 @@ final class Driver implements \Bernard\Driver
      */
     private function getQueueConsumer($queueName)
     {
-        if (array_key_exists($queueName, $this->consumers) === false) {
+        if (\array_key_exists($queueName, $this->consumers) === false) {
             $queue = $this->context->createQueue($queueName);
 
             $this->consumers[$queueName] = $this->context->createConsumer($queue);
