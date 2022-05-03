@@ -2,7 +2,12 @@
     "name": "bernard/drivers",
     "description": "Official Bernard drivers",
     "license": "MIT",
-    "keywords": ["message queue", "message", "queue", "bernard"],
+    "keywords": [
+        "message queue",
+        "message",
+        "queue",
+        "bernard"
+    ],
     "homepage": "https://github.com/bernardphp",
     "authors": [
         {
