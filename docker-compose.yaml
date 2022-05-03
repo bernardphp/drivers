@@ -1,0 +1,11 @@
+version: "3.8"
+
+services:
+    beanstalkd:
+        image: ghcr.io/sammousa/beanstalkd:latest
+
+    redis:
+        image: redis:5
+
+    rabbitmq:
+        image: rabbitmq:3.9-management
