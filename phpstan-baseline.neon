@@ -436,6 +436,16 @@ parameters:
 			path: src/Redis/Driver.php
 
 		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Redis/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Redis/Tests/DriverIntegrationTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Redis\\\\Driver constructor expects Redis, object given\\.$#"
 			count: 1
 			path: src/Redis/Tests/DriverTest.php

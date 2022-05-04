@@ -47,7 +47,11 @@ final class Driver implements \Bernard\Driver
         // see https://github.com/nicolasff/phpredis/issues/158
         [, $message] = $this->redis->blPop([$this->resolveKey($queueName)], $duration) ?: null;
 
-        return new Message($message);
+        if ($message != null) {
+            return new Message($message);
+        }
+
+        return null;
     }
 
     public function acknowledgeMessage($queueName, $receipt): void
