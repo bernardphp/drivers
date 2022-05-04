@@ -32,12 +32,13 @@
         "bernard/sqs-driver": "self.version"
     },
     "require-dev": {
-        "aws/aws-sdk-php": "^3.20",
         "ext-redis": "*",
+        "aws/aws-sdk-php": "^3.20",
         "iron-io/iron_mq": "^4.0",
         "pda/pheanstalk": "^3.0",
-        "php-amqplib/php-amqplib": "^2.7",
+        "php-amqplib/php-amqplib": "^3.2",
         "phpspec/prophecy": "^1.6.0",
+        "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
         "predis/predis": "^1.0",
         "queue-interop/amqp-interop": "^0.6",

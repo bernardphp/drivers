@@ -6,9 +6,24 @@ parameters:
 			path: src/Amqp/Driver.php
 
 		-
-			message: "#^Parameter \\#1 \\$delivery_tag of method PhpAmqpLib\\\\Channel\\\\AMQPChannel\\:\\:basic_ack\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$delivery_tag of method PhpAmqpLib\\\\Channel\\\\AMQPChannel\\:\\:basic_ack\\(\\) expects int, mixed given\\.$#"
 			count: 1
 			path: src/Amqp/Driver.php
+
+		-
+			message: "#^Access to an undefined property Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:\\$amqp\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"

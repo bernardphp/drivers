@@ -19,7 +19,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
 
-    private AMQPStreamConnection $amqp;
+    private AMQPStreamConnection $connection;
 
     private AMQPChannel $channel;
 
@@ -32,17 +32,15 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 
     protected function setUp(): void
     {
-        $this->skipCleanup = false;
+        $this->connection = new AMQPStreamConnection($_ENV['RABBITMQ_HOST'], $_ENV['RABBITMQ_PORT'], 'guest', 'guest');
 
-        $this->amqp = new AMQPStreamConnection($_ENV['RABBITMQ_HOST'], $_ENV['RABBITMQ_PORT'], 'guest', 'guest');
-
-        $this->channel = $this->amqp->channel();
+        $this->channel = $this->connection->channel();
 
         $this->channel->exchange_declare(self::EXCHANGE, 'direct', false, true, false);
         $this->channel->queue_declare(self::QUEUE, false, true, false, false);
         $this->channel->queue_bind(self::QUEUE, self::EXCHANGE, self::QUEUE);
 
-        $this->driver = new Driver($this->amqp, self::EXCHANGE);
+        $this->driver = new Driver($this->connection, self::EXCHANGE);
     }
 
     protected function tearDown(): void
@@ -56,6 +54,8 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         }
 
         $this->channel->close();
+
+        $this->connection->close();
     }
 
     /**
@@ -81,18 +81,18 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message->body);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue(): void
+    public function testItRemovesAQueue(): void
     {
-        $count = 3;
+        $this->skipCleanup = true;
 
-        for ($i = 0; $i < $count; ++$i) {
-            $this->publish();
-        }
+        $this->driver->removeQueue(self::QUEUE);
 
-        // TODO: find out why things are slow on travis
-        sleep(1);
+        $this->publish();
 
-        $this->assertEquals($count, $this->driver->countMessages(self::QUEUE));
+        $this->expectException(AMQPProtocolException::class);
+        $this->expectExceptionMessage(sprintf("NOT_FOUND - no queue '%s' in vhost '/'", self::QUEUE));
+
+        $this->channel->basic_get(self::QUEUE);
     }
 
     public function testItPushesAMessageToAQueue(): void
@@ -113,7 +113,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     {
         $properties = ['content_type' => 'text'];
 
-        $driver = new Driver($this->amqp, self::EXCHANGE, $properties);
+        $driver = new Driver($this->connection, self::EXCHANGE, $properties);
 
         $driver->pushMessage(self::QUEUE, self::MESSAGE);
 
@@ -135,13 +135,16 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         // TODO: find out why things are slow on travis
         sleep(1);
 
+        $message = $this->driver->popMessage(self::QUEUE);
+
         // The queue is always recreated, so the delivery tag is always 1
-        $this->assertEquals([self::MESSAGE, '1'], $this->driver->popMessage(self::QUEUE));
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals('1', $message->receipt);
     }
 
     public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
-        $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
+        $this->assertNull($this->driver->popMessage(self::QUEUE, 1));
     }
 
     public function testItAcknowledgesAMessage(): void
@@ -167,17 +170,17 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $result);
     }
 
-    public function testItRemovesAQueue(): void
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
-        $this->skipCleanup = true;
+        $count = 3;
 
-        $this->driver->removeQueue(self::QUEUE);
+        for ($i = 0; $i < $count; ++$i) {
+            $this->publish();
+        }
 
-        $this->publish();
+        // TODO: find out why things are slow on travis
+        sleep(1);
 
-        $this->expectException(AMQPProtocolException::class);
-        $this->expectExceptionMessage(sprintf("NOT_FOUND - no queue '%s' in vhost '/'", self::QUEUE));
-
-        $this->channel->basic_get(self::QUEUE);
+        $this->assertEquals($count, $this->driver->countMessages(self::QUEUE));
     }
 }

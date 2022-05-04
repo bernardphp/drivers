@@ -11,6 +11,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     public const EXCHANGE = 'exchange';
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
@@ -18,7 +20,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
     /**
      * @var AbstractConnection|ObjectProphecy
      */
-    private $amqp;
+    private $connection;
 
     /**
      * @var AMQPChannel|ObjectProphecy
@@ -32,10 +34,10 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->channel = $this->prophesize(AMQPChannel::class);
         $this->channel->close()->willReturn(null);
 
-        $this->amqp = $this->prophesize(AbstractConnection::class);
-        $this->amqp->channel()->willReturn($this->channel);
+        $this->connection = $this->prophesize(AbstractConnection::class);
+        $this->connection->channel()->willReturn($this->channel);
 
-        $this->driver = new Driver($this->amqp->reveal(), self::EXCHANGE);
+        $this->driver = new Driver($this->connection->reveal(), self::EXCHANGE);
     }
 
     public function testItIsADriver(): void
@@ -48,13 +50,13 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    public function testItPeeksAQueue(): void
-    {
-        $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
-    }
-
     public function testItExposesInfo(): void
     {
         $this->assertEquals([], $this->driver->info());
+    }
+
+    public function testItPeeksAQueue(): void
+    {
+        $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 }
