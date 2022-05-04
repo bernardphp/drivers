@@ -176,43 +176,53 @@ parameters:
 			path: src/IronMQ/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getArrayCopy\\(\\)\\.$#"
+			message: "#^Call to method delete\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getData\\(\\)\\.$#"
+			message: "#^Call to method listTubes\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Cannot access offset 'current\\-jobs\\-ready' on object\\.$#"
+			message: "#^Call to method putInTube\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^If condition is always true\\.$#"
+			message: "#^Call to method reserveFromTube\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\PheanstalkInterface\\:\\:delete\\(\\) expects object, mixed given\\.$#"
+			message: "#^Call to method stats\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
+			message: "#^Call to method statsTube\\(\\) on an unknown class Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getData\\(\\)\\.$#"
+			message: "#^Parameter \\$pheanstalk of method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:__construct\\(\\) has invalid type Pheanstalk\\\\PheanstalkInterface\\.$#"
 			count: 1
+			path: src/Pheanstalk/Driver.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:\\$pheanstalk has unknown class Pheanstalk\\\\PheanstalkInterface as its type\\.$#"
+			count: 1
+			path: src/Pheanstalk/Driver.php
+
+		-
+			message: "#^Call to an undefined method Pheanstalk\\\\Pheanstalk\\:\\:putInTube\\(\\)\\.$#"
+			count: 7
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
-			count: 2
+			message: "#^Call to an undefined method Pheanstalk\\\\Pheanstalk\\:\\:reserveFromTube\\(\\)\\.$#"
+			count: 1
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
@@ -226,7 +236,42 @@ parameters:
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
+			message: "#^Cannot call method getData\\(\\) on Pheanstalk\\\\Job\\|null\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Class Pheanstalk\\\\Pheanstalk constructor invoked with 2 parameters, 1 required\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Method Pheanstalk\\\\Pheanstalk\\:\\:peekReady\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 2
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\Pheanstalk\\:\\:delete\\(\\) expects Pheanstalk\\\\Contract\\\\JobIdInterface, Pheanstalk\\\\Job\\|null given\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$pheanstalk of class Bernard\\\\Driver\\\\Pheanstalk\\\\Driver constructor expects Pheanstalk\\\\PheanstalkInterface, Pheanstalk\\\\Pheanstalk given\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Class Pheanstalk\\\\PheanstalkInterface not found\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$pheanstalk of class Bernard\\\\Driver\\\\Pheanstalk\\\\Driver constructor expects Pheanstalk\\\\PheanstalkInterface, object given\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverTest.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverTest\\:\\:\\$pheanstalk has unknown class Pheanstalk\\\\PheanstalkInterface as its type\\.$#"
 			count: 1
 			path: src/Pheanstalk/Tests/DriverTest.php
 
@@ -286,7 +331,62 @@ parameters:
 			path: src/Predis/Tests/DriverTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$message of method Interop\\\\Queue\\\\PsrConsumer\\:\\:acknowledge\\(\\) expects Interop\\\\Queue\\\\PsrMessage, mixed given\\.$#"
+			message: "#^Call to method acknowledge\\(\\) on an unknown class Interop\\\\Queue\\\\PsrConsumer\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method createConsumer\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method createMessage\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method createProducer\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method createQueue\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 2
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method declareQueue\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 2
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method deleteQueue\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Call to method receive\\(\\) on an unknown class Interop\\\\Queue\\\\PsrConsumer\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:getQueueConsumer\\(\\) has invalid return type Interop\\\\Queue\\\\PsrConsumer\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Parameter \\$context of method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:__construct\\(\\) has invalid type Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:\\$consumers has unknown class Interop\\\\Queue\\\\PsrConsumer as its type\\.$#"
+			count: 1
+			path: src/QueueInterop/Driver.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:\\$context has unknown class Interop\\\\Queue\\\\PsrContext as its type\\.$#"
 			count: 1
 			path: src/QueueInterop/Driver.php
 
@@ -321,6 +421,11 @@ parameters:
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
 
 		-
+			message: "#^Cannot call method shouldBeCalled\\(\\) on void\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/AmqpDriverTest.php
+
+		-
 			message: "#^Cannot call method willReturn\\(\\) on int\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
@@ -329,46 +434,6 @@ parameters:
 			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\PsrContext, object given\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrConsumer\\:\\:willReturn\\(\\)\\.$#"
-			count: 3
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createConsumer\\(\\)\\.$#"
-			count: 3
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createMessage\\(\\)\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createProducer\\(\\)\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createQueue\\(\\)\\.$#"
-			count: 4
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrMessage\\:\\:willReturn\\(\\)\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrProducer\\:\\:willReturn\\(\\)\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrQueue\\:\\:willReturn\\(\\)\\.$#"
-			count: 4
-			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
 			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:acknowledge\\(\\)\\.$#"
@@ -391,6 +456,26 @@ parameters:
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
+			message: "#^Call to method createConsumer\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 3
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Call to method createMessage\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Call to method createProducer\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Call to method createQueue\\(\\) on an unknown class Interop\\\\Queue\\\\PsrContext\\.$#"
+			count: 4
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
 			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
@@ -401,7 +486,37 @@ parameters:
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
+			message: "#^Class Interop\\\\Queue\\\\PsrConsumer not found\\.$#"
+			count: 3
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Class Interop\\\\Queue\\\\PsrContext not found\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Class Interop\\\\Queue\\\\PsrMessage not found\\.$#"
+			count: 3
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Class Interop\\\\Queue\\\\PsrProducer not found\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Class Interop\\\\Queue\\\\PsrQueue not found\\.$#"
+			count: 4
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\PsrContext, object given\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/DriverTest.php
+
+		-
+			message: "#^Property Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:\\$context has unknown class Interop\\\\Queue\\\\PsrContext as its type\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
