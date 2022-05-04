@@ -22,7 +22,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     protected function setUp(): void
     {
         $this->redis = new \Redis();
-        $this->redis->connect($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']);
+        $this->redis->connect($_ENV['REDIS_HOST'], (int) $_ENV['REDIS_PORT']);
         $this->redis->setOption(\Redis::OPT_PREFIX, 'bernard:');
 
         $this->driver = new Driver($this->redis);
@@ -65,15 +65,15 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue(): void
+    public function testItRemovesAQueue(): void
     {
         $this->redis->sAdd('queues', self::QUEUE);
         $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
-        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
-        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
-        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
 
-        $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
+        $this->driver->removeQueue(self::QUEUE);
+
+        $this->assertFalse($this->redis->get('queue:'.self::QUEUE));
+        $this->assertNotContains(self::QUEUE, $this->redis->sMembers('queues'));
     }
 
     public function testItPushesAMessageToAQueue(): void
@@ -92,12 +92,15 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->redis->sAdd('queues', self::QUEUE);
         $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
 
-        $this->assertEquals([self::MESSAGE, null], $this->driver->popMessage(self::QUEUE));
+        $message = $this->driver->popMessage(self::QUEUE);
+
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertNull($message->receipt);
     }
 
     public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
-        $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
+        $this->assertNull($this->driver->popMessage(self::QUEUE, 1));
     }
 
     public function testItPeeksAQueue(): void
@@ -122,14 +125,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testItRemovesAQueue(): void
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $this->redis->sAdd('queues', self::QUEUE);
         $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
+        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
+        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
+        $this->redis->rPush('queue:'.self::QUEUE, self::MESSAGE);
 
-        $this->driver->removeQueue(self::QUEUE);
-
-        $this->assertFalse($this->redis->get('queue:'.self::QUEUE));
-        $this->assertNotContains(self::QUEUE, $this->redis->sMembers('queues'));
+        $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
     }
 }

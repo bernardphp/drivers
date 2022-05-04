@@ -6,9 +6,24 @@ parameters:
 			path: src/Amqp/Driver.php
 
 		-
-			message: "#^Parameter \\#1 \\$delivery_tag of method PhpAmqpLib\\\\Channel\\\\AMQPChannel\\:\\:basic_ack\\(\\) expects string, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$delivery_tag of method PhpAmqpLib\\\\Channel\\\\AMQPChannel\\:\\:basic_ack\\(\\) expects int, mixed given\\.$#"
 			count: 1
 			path: src/Amqp/Driver.php
+
+		-
+			message: "#^Access to an undefined property Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:\\$amqp\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Amqp/Tests/DriverIntegrationTest.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
@@ -161,57 +176,52 @@ parameters:
 			path: src/IronMQ/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getArrayCopy\\(\\)\\.$#"
+			message: "#^Cannot cast mixed to int\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getData\\(\\)\\.$#"
+			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\Contract\\\\PheanstalkInterface\\:\\:delete\\(\\) expects Pheanstalk\\\\Contract\\\\JobIdInterface, mixed given\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Cannot access offset 'current\\-jobs\\-ready' on object\\.$#"
-			count: 1
-			path: src/Pheanstalk/Driver.php
-
-		-
-			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: src/Pheanstalk/Driver.php
-
-		-
-			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\PheanstalkInterface\\:\\:delete\\(\\) expects object, mixed given\\.$#"
-			count: 1
-			path: src/Pheanstalk/Driver.php
-
-		-
-			message: "#^Unreachable statement \\- code above always terminates\\.$#"
-			count: 1
-			path: src/Pheanstalk/Driver.php
-
-		-
-			message: "#^Call to an undefined method object\\:\\:getData\\(\\)\\.$#"
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 1
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Call to an undefined method object\\:\\:getId\\(\\)\\.$#"
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 2
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Cannot access offset 0 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			message: "#^Cannot call method getData\\(\\) on Pheanstalk\\\\Job\\|null\\.$#"
 			count: 1
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Cannot access offset 1 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			message: "#^Cannot call method getData\\(\\) on mixed\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot call method getId\\(\\) on Pheanstalk\\\\Job\\|null\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Method Pheanstalk\\\\Pheanstalk\\:\\:peekReady\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 2
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$pheanstalk of class Bernard\\\\Driver\\\\Pheanstalk\\\\Driver constructor expects Pheanstalk\\\\PheanstalkInterface, object given\\.$#"
+			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\Pheanstalk\\:\\:peek\\(\\) expects Pheanstalk\\\\Contract\\\\JobIdInterface, Pheanstalk\\\\Job\\|null given\\.$#"
+			count: 1
+			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$pheanstalk of class Bernard\\\\Driver\\\\Pheanstalk\\\\Driver constructor expects Pheanstalk\\\\Contract\\\\PheanstalkInterface, object given\\.$#"
 			count: 1
 			path: src/Pheanstalk/Tests/DriverTest.php
 
@@ -266,12 +276,22 @@ parameters:
 			path: src/Predis/Tests/DriverIntegrationTest.php
 
 		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Predis/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Predis/Tests/DriverIntegrationTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Predis\\\\Driver constructor expects Predis\\\\ClientInterface, object given\\.$#"
 			count: 1
 			path: src/Predis/Tests/DriverTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$message of method Interop\\\\Queue\\\\PsrConsumer\\:\\:acknowledge\\(\\) expects Interop\\\\Queue\\\\PsrMessage, mixed given\\.$#"
+			message: "#^Parameter \\#1 \\$message of method Interop\\\\Queue\\\\Consumer\\:\\:acknowledge\\(\\) expects Interop\\\\Queue\\\\Message, mixed given\\.$#"
 			count: 1
 			path: src/QueueInterop/Driver.php
 
@@ -306,52 +326,57 @@ parameters:
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
 
 		-
+			message: "#^Cannot call method shouldBeCalled\\(\\) on void\\.$#"
+			count: 1
+			path: src/QueueInterop/Tests/AmqpDriverTest.php
+
+		-
 			message: "#^Cannot call method willReturn\\(\\) on int\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\PsrContext, object given\\.$#"
+			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\Context, object given\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrConsumer\\:\\:willReturn\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Consumer\\:\\:willReturn\\(\\)\\.$#"
 			count: 3
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createConsumer\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Context\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createConsumer\\(\\)\\.$#"
 			count: 3
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createMessage\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Context\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createMessage\\(\\)\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createProducer\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Context\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createProducer\\(\\)\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrContext\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createQueue\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Context\\|Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:createQueue\\(\\)\\.$#"
 			count: 4
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrMessage\\:\\:willReturn\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Message\\:\\:willReturn\\(\\)\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrProducer\\:\\:willReturn\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Producer\\:\\:willReturn\\(\\)\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Call to an undefined method Interop\\\\Queue\\\\PsrQueue\\:\\:willReturn\\(\\)\\.$#"
+			message: "#^Call to an undefined method Interop\\\\Queue\\\\Queue\\:\\:willReturn\\(\\)\\.$#"
 			count: 4
 			path: src/QueueInterop/Tests/DriverTest.php
 
@@ -386,7 +411,7 @@ parameters:
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\PsrContext, object given\\.$#"
+			message: "#^Parameter \\#1 \\$context of class Bernard\\\\Driver\\\\QueueInterop\\\\Driver constructor expects Interop\\\\Queue\\\\Context, object given\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
@@ -409,6 +434,16 @@ parameters:
 			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:countMessages\\(\\) should return int but returns int\\|false\\.$#"
 			count: 1
 			path: src/Redis/Driver.php
+
+		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Redis/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Redis/Tests/DriverIntegrationTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Redis\\\\Driver constructor expects Redis, object given\\.$#"

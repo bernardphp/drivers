@@ -10,6 +10,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
 
@@ -45,11 +47,11 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue(): void
+    public function testItRemovesAQueue(): void
     {
-        $this->ironmq->getQueue(self::QUEUE)->willReturn((object) ['size' => 4]);
+        $this->ironmq->deleteQueue(self::QUEUE)->shouldBeCalled();
 
-        $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
+        $this->driver->removeQueue(self::QUEUE);
     }
 
     public function testItPushesAMessageToAQueue(): void
@@ -101,6 +103,21 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->acknowledgeMessage(self::QUEUE, 'receipt');
     }
 
+    public function testItExposesInfo(): void
+    {
+        $driver = new Driver($this->ironmq->reveal(), 10);
+
+        $this->assertEquals(['prefetch' => 10], $driver->info());
+        $this->assertEquals(['prefetch' => 2], $this->driver->info());
+    }
+
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
+    {
+        $this->ironmq->getQueue(self::QUEUE)->willReturn((object) ['size' => 4]);
+
+        $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
+    }
+
     public function testItPeeksAQueue(): void
     {
         $this->ironmq->peekMessages(self::QUEUE, 10)->willReturn([
@@ -108,20 +125,5 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         ]);
 
         $this->assertEquals([self::MESSAGE], $this->driver->peekQueue(self::QUEUE, 10, 10));
-    }
-
-    public function testItRemovesAQueue(): void
-    {
-        $this->ironmq->deleteQueue(self::QUEUE)->shouldBeCalled();
-
-        $this->driver->removeQueue(self::QUEUE);
-    }
-
-    public function testItExposesInfo(): void
-    {
-        $driver = new Driver($this->ironmq->reveal(), 10);
-
-        $this->assertEquals(['prefetch' => 10], $driver->info());
-        $this->assertEquals(['prefetch' => 2], $this->driver->info());
     }
 }

@@ -10,6 +10,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @var ClientInterface|ObjectProphecy
      */

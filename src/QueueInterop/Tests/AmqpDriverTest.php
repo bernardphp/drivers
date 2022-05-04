@@ -11,6 +11,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     public const QUEUE = 'queue';
 
     /**

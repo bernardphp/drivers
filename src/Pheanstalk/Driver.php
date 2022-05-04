@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Bernard\Driver\Pheanstalk;
 
 use Bernard\Driver\Message;
-use Pheanstalk\PheanstalkInterface;
+use Pheanstalk\Contract\PheanstalkInterface;
 
 final class Driver implements \Bernard\Driver
 {
@@ -28,12 +28,12 @@ final class Driver implements \Bernard\Driver
 
     public function pushMessage(string $queueName, string $message): void
     {
-        $this->pheanstalk->putInTube($queueName, $message);
+        $this->pheanstalk->useTube($queueName)->put($message);
     }
 
     public function popMessage(string $queueName, int $duration = 5): ?Message
     {
-        if ($job = $this->pheanstalk->reserveFromTube($queueName, $duration)) {
+        if ($job = $this->pheanstalk->watchOnly($queueName)->reserveWithTimeout($duration)) {
             return new Message($job->getData(), $job);
         }
 
@@ -47,16 +47,14 @@ final class Driver implements \Bernard\Driver
 
     public function info(): array
     {
-        return $this->pheanstalk
-            ->stats()
-            ->getArrayCopy();
+        return iterator_to_array($this->pheanstalk->stats());
     }
 
     public function countMessages(string $queueName): int
     {
         $stats = $this->pheanstalk->statsTube($queueName);
 
-        return $stats['current-jobs-ready'];
+        return (int) $stats['current-jobs-ready'];
     }
 
     public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array

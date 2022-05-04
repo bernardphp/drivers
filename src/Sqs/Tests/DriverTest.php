@@ -11,6 +11,8 @@ use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     public const QUEUE = 'queue';
     public const URL = 'url';
     public const MESSAGE = 'message';
@@ -74,11 +76,6 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('2', $message->receipt);
     }
 
-    public function testItPeeksAQueue(): void
-    {
-        $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
-    }
-
     public function testItExposesInfo(): void
     {
         $this->assertEquals(['prefetch' => 2], $this->driver->info());
@@ -89,5 +86,10 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $driver = new Driver($this->sqs->reveal(), [self::QUEUE => 'url'], 10);
 
         $this->assertEquals(['prefetch' => 10], $driver->info());
+    }
+
+    public function testItPeeksAQueue(): void
+    {
+        $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 }

@@ -118,25 +118,18 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($queue, $result->get('QueueUrl'));
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue(): void
+    public function testItRemovesAQueue(): void
     {
-        $queue = $this->createQueue('count');
+        $queue = $this->createQueue('remove');
+        $this->queues = [];
 
-        $this->sqs->sendMessageBatch([
-            'QueueUrl' => $queue[1],
-            'Entries' => [
-                [
-                    'Id' => '1',
-                    'MessageBody' => self::MESSAGE,
-                ],
-                [
-                    'Id' => '2',
-                    'MessageBody' => self::MESSAGE,
-                ],
-            ],
-        ]);
+        $this->driver->removeQueue($queue[0]);
 
-        $this->assertEquals(2, $this->driver->countMessages($queue[0]));
+        try {
+            $this->sqs->getQueueUrl(['QueueName' => $queue[0]]);
+        } catch (SqsException $e) {
+            $this->assertEquals($e->getAwsErrorCode(), 'AWS.SimpleQueueService.NonExistentQueue');
+        }
     }
 
     public function testItPushesAMessageToAQueue(): void
@@ -208,17 +201,24 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $result['Attributes']['ApproximateNumberOfMessages']);
     }
 
-    public function testItRemovesAQueue(): void
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
-        $queue = $this->createQueue('remove');
-        $this->queues = [];
+        $queue = $this->createQueue('count');
 
-        $this->driver->removeQueue($queue[0]);
+        $this->sqs->sendMessageBatch([
+            'QueueUrl' => $queue[1],
+            'Entries' => [
+                [
+                    'Id' => '1',
+                    'MessageBody' => self::MESSAGE,
+                ],
+                [
+                    'Id' => '2',
+                    'MessageBody' => self::MESSAGE,
+                ],
+            ],
+        ]);
 
-        try {
-            $this->sqs->getQueueUrl(['QueueName' => $queue[0]]);
-        } catch (SqsException $e) {
-            $this->assertEquals($e->getAwsErrorCode(), 'AWS.SimpleQueueService.NonExistentQueue');
-        }
+        $this->assertEquals(2, $this->driver->countMessages($queue[0]));
     }
 }
