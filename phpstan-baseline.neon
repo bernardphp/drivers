@@ -276,6 +276,16 @@ parameters:
 			path: src/Predis/Tests/DriverIntegrationTest.php
 
 		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Predis/Tests/DriverIntegrationTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Predis/Tests/DriverIntegrationTest.php
+
+		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Predis\\\\Driver constructor expects Predis\\\\ClientInterface, object given\\.$#"
 			count: 1
 			path: src/Predis/Tests/DriverTest.php
