@@ -4,96 +4,64 @@ declare(strict_types=1);
 
 namespace Bernard\Driver\AppEngine;
 
+use Bernard\Driver\Message;
 use google\appengine\api\taskqueue\PushTask;
 
 /**
- * Simple driver for google AppEngine. Many features are not supported.
+ * Google App Engine driver. Many features are not supported.
  * It takes a list of array('name' => 'endpoint') to route messages to the
  * correct place.
  */
 final class Driver implements \Bernard\Driver
 {
-    private $queueMap;
-
-    public function __construct(array $queueMap)
+    public function __construct(private array $queueMap)
     {
-        $this->queueMap = $queueMap;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         return array_flip($this->queueMap);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueue($queueName): void
+    public function createQueue(string $queueName): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function countMessages($queueName): void
+    public function removeQueue(string $queueName): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message): void
+    public function pushMessage(string $queueName, string $message): void
     {
         $task = new PushTask($this->resolveEndpoint($queueName), compact('message'));
         $task->add($queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5): void
+    public function popMessage(string $queueName, int $duration = 5): ?Message
+    {
+        return null;
+    }
+
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt): void
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeQueue($queueName): void
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
+    public function info(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
+    public function countMessages(string $queueName): int
+    {
+        return 0;
+    }
+
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
     {
         return [];
     }
 
-    /**
-     * @param string $queueName
-     *
-     * @return string
-     */
-    private function resolveEndpoint($queueName)
+    private function resolveEndpoint(string $queueName): string
     {
         if (isset($this->queueMap[$queueName])) {
             return $this->queueMap[$queueName];

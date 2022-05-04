@@ -15,15 +15,9 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
 
-    /**
-     * @var \Redis
-     */
-    private $redis;
+    private \Redis $redis;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {

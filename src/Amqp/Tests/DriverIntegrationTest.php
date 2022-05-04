@@ -19,27 +19,16 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
 
-    /**
-     * @var AMQPStreamConnection
-     */
-    private $amqp;
+    private AMQPStreamConnection $amqp;
 
-    /**
-     * @var AMQPChannel
-     */
-    private $channel;
+    private AMQPChannel $channel;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     /**
      * Skip cleaning up the queue (eg. cleanup is part of the test).
-     *
-     * @var bool
      */
-    private $skipCleanup = false;
+    private bool $skipCleanup = false;
 
     protected function setUp(): void
     {
@@ -71,11 +60,8 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 
     /**
      * Publishes a simple test message to the queue.
-     *
-     * @param string $queue
-     * @param string $message
      */
-    private function publish($queue = self::QUEUE, $message = self::MESSAGE): void
+    private function publish(string $queue = self::QUEUE, string $message = self::MESSAGE): void
     {
         $this->channel->basic_publish(new AMQPMessage($message), self::EXCHANGE, $queue);
     }
@@ -174,7 +160,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(AMQPMessage::class, $message);
 
-        $this->driver->acknowledgeMessage(self::QUEUE, $message->delivery_info['delivery_tag']);
+        $this->driver->acknowledgeMessage(self::QUEUE, $message->getDeliveryTag());
 
         // One message remained in the queue
         $result = $this->channel->queue_purge(self::QUEUE);

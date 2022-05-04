@@ -4,96 +4,63 @@ declare(strict_types=1);
 
 namespace Bernard\Driver\Pheanstalk;
 
+use Bernard\Driver\Message;
 use Pheanstalk\PheanstalkInterface;
 
-/**
- * Implements a Driver for use with https://github.com/pda/pheanstalk.
- */
 final class Driver implements \Bernard\Driver
 {
-    private $pheanstalk;
-
-    public function __construct(PheanstalkInterface $pheanstalk)
+    public function __construct(private PheanstalkInterface $pheanstalk)
     {
-        $this->pheanstalk = $pheanstalk;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         return $this->pheanstalk->listTubes();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueue($queueName): void
+    public function createQueue(string $queueName): void
     {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function countMessages($queueName)
+    public function removeQueue(string $queueName): void
+    {
+    }
+
+    public function pushMessage(string $queueName, string $message): void
+    {
+        $this->pheanstalk->putInTube($queueName, $message);
+    }
+
+    public function popMessage(string $queueName, int $duration = 5): ?Message
+    {
+        if ($job = $this->pheanstalk->reserveFromTube($queueName, $duration)) {
+            return new Message($job->getData(), $job);
+        }
+
+        return null;
+    }
+
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
+    {
+        $this->pheanstalk->delete($receipt);
+    }
+
+    public function info(): array
+    {
+        return $this->pheanstalk
+            ->stats()
+            ->getArrayCopy();
+    }
+
+    public function countMessages(string $queueName): int
     {
         $stats = $this->pheanstalk->statsTube($queueName);
 
         return $stats['current-jobs-ready'];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message): void
-    {
-        $this->pheanstalk->putInTube($queueName, $message);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5)
-    {
-        if ($job = $this->pheanstalk->reserveFromTube($queueName, $duration)) {
-            return [$job->getData(), $job];
-        }
-
-        return [null, null];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt): void
-    {
-        $this->pheanstalk->delete($receipt);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
     {
         return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeQueue($queueName): void
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
-    {
-        return $this->pheanstalk
-            ->stats()
-            ->getArrayCopy()
-        ;
     }
 }

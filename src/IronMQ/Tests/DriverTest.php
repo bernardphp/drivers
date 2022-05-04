@@ -18,10 +18,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $ironmq;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -68,14 +65,17 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
             (object) ['body' => self::MESSAGE, 'id' => 1],
         ]);
 
-        $this->assertEquals([self::MESSAGE, 1], $this->driver->popMessage(self::QUEUE));
+        $message = $this->driver->popMessage(self::QUEUE);
+
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals(1, $message->receipt);
     }
 
     public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $this->ironmq->reserveMessages(self::QUEUE, 2, IronMQ::GET_MESSAGE_TIMEOUT, 5)->willReturn(null);
 
-        $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE));
+        $this->assertNull($this->driver->popMessage(self::QUEUE));
     }
 
     public function testItPrefetchesMessagesFromAQueue(): void
@@ -85,8 +85,13 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
             (object) ['body' => self::MESSAGE, 'id' => 2],
         ]);
 
-        $this->assertEquals([self::MESSAGE, 1], $this->driver->popMessage(self::QUEUE));
-        $this->assertEquals([self::MESSAGE, 2], $this->driver->popMessage(self::QUEUE));
+        $message = $this->driver->popMessage(self::QUEUE);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals(1, $message->receipt);
+
+        $message = $this->driver->popMessage(self::QUEUE);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals(2, $message->receipt);
     }
 
     public function testItAcknowledgesAMessage(): void

@@ -7,16 +7,15 @@ namespace Bernard\Driver\AppEngine\Tests;
 use Bernard\Driver\AppEngine\Driver;
 use google\appengine\api\taskqueue\PushTask;
 
-class DriverTest extends \PHPUnit\Framework\TestCase
+final class DriverTest extends \PHPUnit\Framework\TestCase
 {
-    /** @var Driver */
-    private $driver;
+    private Driver $driver;
 
     public static function setUpBeforeClass(): void
     {
         // Very ugly hack! But AppEngine SDK isn't available outside appengine
         // environment.
-        class_alias('Bernard\Driver\AppEngine\Tests\Fixtures\PushTask', 'google\appengine\api\taskqueue\PushTask');
+        class_alias(\Bernard\Driver\AppEngine\Tests\Fixtures\PushTask::class, 'google\appengine\api\taskqueue\PushTask');
     }
 
     protected function setUp(): void

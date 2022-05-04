@@ -9,7 +9,7 @@ use Aws\Sqs\SqsClient;
 use Bernard\Driver\Sqs\Driver;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class DriverTest extends \PHPUnit\Framework\TestCase
+final class DriverTest extends \PHPUnit\Framework\TestCase
 {
     public const QUEUE = 'queue';
     public const URL = 'url';
@@ -20,10 +20,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $sqs;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -68,11 +65,13 @@ class DriverTest extends \PHPUnit\Framework\TestCase
 
         $message = $driver->popMessage(self::QUEUE);
 
-        $this->assertEquals([self::MESSAGE, '1'], $message);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals('1', $message->receipt);
 
         $message = $driver->popMessage(self::QUEUE, 10);
 
-        $this->assertEquals([self::MESSAGE, '2'], $message);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals('2', $message->receipt);
     }
 
     public function testItPeeksAQueue(): void

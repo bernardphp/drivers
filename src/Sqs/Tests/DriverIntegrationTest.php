@@ -15,22 +15,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 {
     public const MESSAGE = 'message';
 
-    /**
-     * @var SqsClient
-     */
-    private $sqs;
+    private SqsClient $sqs;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     /**
      * List of queues to clean up after running the test suite.
-     *
-     * @var array
      */
-    private $queues = [];
+    private array $queues = [];
 
     protected function setUp(): void
     {
@@ -58,18 +50,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      * Creates a queue name for a topic, also saves the queue name in the local cleanup queue.
      * It is necessary to use less deterministic names, because Amazon limits how queue names can be reused.
      * (Have to wait 60 seconds after a queue is deleted).
-     *
-     * @param string $topic
-     *
-     * @return string
      */
-    private function queueName($topic)
+    private function queueName(string $topic): string
     {
         // PHP version is added so tests can run in parallel in CI
         return $this->queues[] = sprintf('bernard_%s_%d_%s', $topic, \PHP_VERSION_ID, uniqid());
     }
 
-    private function createQueue($topic)
+    private function createQueue(string $topic): array
     {
         $queueName = $this->queueName($topic);
 

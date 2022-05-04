@@ -18,10 +18,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
      */
     private $context;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {

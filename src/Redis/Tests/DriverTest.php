@@ -17,10 +17,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $redis;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {

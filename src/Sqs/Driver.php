@@ -7,6 +7,7 @@ namespace Bernard\Driver\Sqs;
 use Aws\Sqs\Exception\SqsException;
 use Aws\Sqs\SqsClient;
 use Bernard\Driver\AbstractPrefetchDriver;
+use Bernard\Driver\Message;
 
 /**
  * Implements a Driver for use with AWS SQS client API: https://aws.amazon.com/sqs/.
@@ -17,24 +18,12 @@ final class Driver extends AbstractPrefetchDriver
     public const AWS_SQS_EXCEPTION_BAD_REQUEST = 400;
     public const AWS_SQS_EXCEPTION_NOT_FOUND = 404;
 
-    private $sqs;
-    private $queueUrls;
-
-    /**
-     * @param int|null $prefetch
-     */
-    public function __construct(SqsClient $sqs, array $queueUrls = [], $prefetch = null)
+    public function __construct(private SqsClient $sqs, private array $queueUrls = [], ?int $prefetch = null)
     {
         parent::__construct($prefetch);
-
-        $this->sqs = $sqs;
-        $this->queueUrls = $queueUrls;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         $result = $this->sqs->listQueues();
 
@@ -56,13 +45,11 @@ final class Driver extends AbstractPrefetchDriver
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @see http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#createqueue
      *
      * @throws SqsException
      */
-    public function createQueue($queueName): void
+    public function createQueue(string $queueName): void
     {
         if ($this->queueExists($queueName)) {
             return;
@@ -84,13 +71,9 @@ final class Driver extends AbstractPrefetchDriver
     }
 
     /**
-     * @param string $queueName
-     *
-     * @return bool
-     *
      * @throws SqsException
      */
-    private function queueExists($queueName)
+    private function queueExists(string $queueName): bool
     {
         try {
             $this->resolveUrl($queueName);
@@ -111,23 +94,12 @@ final class Driver extends AbstractPrefetchDriver
         }
     }
 
-    /**
-     * @param string $queueName
-     *
-     * @return bool
-     */
-    private function isFifoQueue($queueName)
+    private function isFifoQueue(string $queueName): bool
     {
         return $this->endsWith($queueName, self::AWS_SQS_FIFO_SUFFIX);
     }
 
-    /**
-     * @param string $haystack
-     * @param string $needle
-     *
-     * @return bool
-     */
-    private function endsWith($haystack, $needle)
+    private function endsWith(string $haystack, string $needle): bool
     {
         $length = \strlen($needle);
         if ($length === 0) {
@@ -138,28 +110,18 @@ final class Driver extends AbstractPrefetchDriver
     }
 
     /**
-     * {@inheritdoc}
+     * @see http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#deletequeue
      */
-    public function countMessages($queueName)
+    public function removeQueue(string $queueName): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 
-        $result = $this->sqs->getQueueAttributes([
+        $this->sqs->deleteQueue([
             'QueueUrl' => $queueUrl,
-            'AttributeNames' => ['ApproximateNumberOfMessages'],
         ]);
-
-        if (isset($result['Attributes']['ApproximateNumberOfMessages'])) {
-            return (int) $result['Attributes']['ApproximateNumberOfMessages'];
-        }
-
-        return 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message): void
+    public function pushMessage(string $queueName, string $message): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 
@@ -176,10 +138,7 @@ final class Driver extends AbstractPrefetchDriver
         $this->sqs->sendMessage($parameters);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5)
+    public function popMessage(string $queueName, int $duration = 5): ?Message
     {
         if ($message = $this->cache->pop($queueName)) {
             return $message;
@@ -194,20 +153,17 @@ final class Driver extends AbstractPrefetchDriver
         ]);
 
         if (!$result || !$messages = $result->get('Messages')) {
-            return [null, null];
+            return null;
         }
 
         foreach ($messages as $message) {
-            $this->cache->push($queueName, [$message['Body'], $message['ReceiptHandle']]);
+            $this->cache->push($queueName, new Message($message['Body'], $message['ReceiptHandle']));
         }
 
         return $this->cache->pop($queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt): void
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 
@@ -217,48 +173,40 @@ final class Driver extends AbstractPrefetchDriver
         ]);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     *
-     * @see http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#deletequeue
-     */
-    public function removeQueue($queueName): void
-    {
-        $queueUrl = $this->resolveUrl($queueName);
-
-        $this->sqs->deleteQueue([
-            'QueueUrl' => $queueUrl,
-        ]);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
+    public function info(): array
     {
         return [
             'prefetch' => $this->prefetch,
         ];
     }
 
+    public function countMessages(string $queueName): int
+    {
+        $queueUrl = $this->resolveUrl($queueName);
+
+        $result = $this->sqs->getQueueAttributes([
+            'QueueUrl' => $queueUrl,
+            'AttributeNames' => ['ApproximateNumberOfMessages'],
+        ]);
+
+        if (isset($result['Attributes']['ApproximateNumberOfMessages'])) {
+            return (int) $result['Attributes']['ApproximateNumberOfMessages'];
+        }
+
+        return 0;
+    }
+
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
+    {
+        return [];
+    }
+
     /**
      * AWS works with queue URLs rather than queue names. Returns either queue URL (if queue exists) for given name or null if not.
      *
-     * @param string $queueName
-     *
-     * @return mixed
-     *
      * @throws SqsException
      */
-    private function resolveUrl($queueName)
+    private function resolveUrl(string $queueName): mixed
     {
         if (isset($this->queueUrls[$queueName])) {
             return $this->queueUrls[$queueName];

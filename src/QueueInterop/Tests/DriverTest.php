@@ -22,10 +22,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $context;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -73,15 +70,15 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $message->getBody()->willReturn(self::MESSAGE);
 
         $consumer = $this->prophesize(PsrConsumer::class);
-        $consumer->receive(6789)->willReturn($message);
+        $consumer->receive(6000)->willReturn($message);
 
         $this->context->createQueue(self::QUEUE)->willReturn($queue);
         $this->context->createConsumer($queue)->willReturn($consumer);
 
-        $this->assertSame(
-            [self::MESSAGE, $message->reveal()],
-            $this->driver->popMessage(self::QUEUE, 6.789)
-        );
+        $driverMessage = $this->driver->popMessage(self::QUEUE, 6);
+
+        $this->assertSame(self::MESSAGE, $driverMessage->message);
+        $this->assertSame($message->reveal(), $driverMessage->receipt);
     }
 
     public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
@@ -94,7 +91,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->context->createQueue(self::QUEUE)->willReturn($queue);
         $this->context->createConsumer($queue)->willReturn($consumer);
 
-        $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE));
+        $this->assertNull($this->driver->popMessage(self::QUEUE));
     }
 
     public function it_acknowledges_a_message(): void
