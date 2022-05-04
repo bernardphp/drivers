@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Sqs\Tests;
 
 use Aws\Sqs\Exception\SqsException;
@@ -95,7 +97,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $queue = $this->createQueue('list');
 
@@ -118,7 +120,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertLessThan($retryLimit, $retries, 'Failed asserting queue creation within the retry limit');
     }
 
-    public function testItCreatesAQueue()
+    public function testItCreatesAQueue(): void
     {
         $queue = $this->queueName('create');
 
@@ -128,7 +130,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($queue, $result->get('QueueUrl'));
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $queue = $this->createQueue('count');
 
@@ -149,7 +151,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(2, $this->driver->countMessages($queue[0]));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $queue = $this->createQueue('push');
 
@@ -167,7 +169,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $messages[0]['Body']);
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $queue = $this->createQueue('pop');
 
@@ -182,14 +184,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($message[1]);
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $queue = $this->createQueue('pop_empty');
 
         $this->assertEquals([null, null], $this->driver->popMessage($queue[0], 1));
     }
 
-    public function testItAcknowledgesAMessage()
+    public function testItAcknowledgesAMessage(): void
     {
         $queue = $this->createQueue('ack');
 
@@ -218,7 +220,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $result['Attributes']['ApproximateNumberOfMessages']);
     }
 
-    public function testItRemovesAQueue()
+    public function testItRemovesAQueue(): void
     {
         $queue = $this->createQueue('remove');
         $this->queues = [];

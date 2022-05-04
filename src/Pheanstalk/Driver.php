@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Pheanstalk;
 
 use Pheanstalk\PheanstalkInterface;
@@ -27,7 +29,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
     }
 
@@ -44,7 +46,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $this->pheanstalk->putInTube($queueName, $message);
     }
@@ -64,7 +66,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
         $this->pheanstalk->delete($receipt);
     }
@@ -80,7 +82,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
     }
 

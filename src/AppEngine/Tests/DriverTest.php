@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\AppEngine\Tests;
 
 use Bernard\Driver\AppEngine\Driver;
@@ -29,7 +31,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         PushTask::$messages = [];
     }
 
-    public function testItQueuesPushTask()
+    public function testItQueuesPushTask(): void
     {
         $this->driver->pushMessage('send-newsletter', 'message');
 
@@ -37,7 +39,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($message, PushTask::$messages['send-newsletter'][0]);
     }
 
-    public function testItUsesDefaultEndpointWhenAliasArentThere()
+    public function testItUsesDefaultEndpointWhenAliasArentThere(): void
     {
         $this->driver->pushMessage('import-users', 'message');
         $this->driver->pushMessage('calculate-reports', 'message');
@@ -51,7 +53,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($messages[1], PushTask::$messages['calculate-reports'][0]);
     }
 
-    public function testListQueues()
+    public function testListQueues(): void
     {
         $this->assertEquals(['/url_endpoint' => 'send-newsletter'], $this->driver->listQueues());
     }

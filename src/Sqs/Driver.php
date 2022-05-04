@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Sqs;
 
 use Aws\Sqs\Exception\SqsException;
@@ -60,7 +62,7 @@ final class Driver extends AbstractPrefetchDriver
      *
      * @throws SqsException
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
         if ($this->queueExists($queueName)) {
             return;
@@ -157,7 +159,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 
@@ -205,7 +207,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 
@@ -228,7 +230,7 @@ final class Driver extends AbstractPrefetchDriver
      *
      * @see http://docs.aws.amazon.com/aws-sdk-php/v3/api/api-sqs-2012-11-05.html#deletequeue
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
         $queueUrl = $this->resolveUrl($queueName);
 

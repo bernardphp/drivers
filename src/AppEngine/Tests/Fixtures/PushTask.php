@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\AppEngine\Tests\Fixtures;
 
 /**
@@ -21,7 +23,7 @@ class PushTask
         $this->options = $options;
     }
 
-    public function add($queueName = 'default')
+    public function add($queueName = 'default'): void
     {
         static::$messages[$queueName][] = $this;
     }

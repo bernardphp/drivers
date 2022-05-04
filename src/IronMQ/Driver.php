@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\IronMQ;
 
 use Bernard\Driver\AbstractPrefetchDriver;
@@ -47,7 +49,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
     }
 
@@ -66,7 +68,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $this->ironmq->postMessage($queueName, $message);
     }
@@ -96,7 +98,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
         $this->ironmq->deleteMessage($queueName, $receipt);
     }
@@ -118,7 +120,7 @@ final class Driver extends AbstractPrefetchDriver
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
         $this->ironmq->deleteQueue($queueName);
     }
@@ -142,9 +144,7 @@ final class Driver extends AbstractPrefetchDriver
      */
     private function pluck(array $objects, $property)
     {
-        $function = function ($object) use ($property) {
-            return $object->$property;
-        };
+        $function = fn ($object) => $object->$property;
 
         return array_map($function, $objects);
     }

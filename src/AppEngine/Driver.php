@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\AppEngine;
 
 use google\appengine\api\taskqueue\PushTask;
@@ -29,21 +31,21 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function countMessages($queueName)
+    public function countMessages($queueName): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $task = new PushTask($this->resolveEndpoint($queueName), compact('message'));
         $task->add($queueName);
@@ -52,21 +54,21 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function popMessage($queueName, $duration = 5)
+    public function popMessage($queueName, $duration = 5): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
     }
 

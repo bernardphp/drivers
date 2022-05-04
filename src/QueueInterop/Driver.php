@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\QueueInterop;
 
 use Interop\Amqp\AmqpContext;
@@ -35,7 +37,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
         if ($this->context instanceof AmqpContext) {
             $this->context->declareQueue($this->createAmqpQueue($queueName));
@@ -57,7 +59,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $queue = $this->context->createQueue($queueName);
         $message = $this->context->createMessage($message);
@@ -80,7 +82,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
         $this->getQueueConsumer($queueName)->acknowledge($receipt);
     }
@@ -96,7 +98,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
         if ($this->context instanceof AmqpContext) {
             $queue = $this->createAmqpQueue($queueName);

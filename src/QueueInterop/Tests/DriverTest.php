@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\QueueInterop\Tests;
 
 use Bernard\Driver\QueueInterop\Driver;
@@ -32,22 +34,22 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->context->reveal());
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $this->assertSame(0, $this->driver->countMessages(self::QUEUE));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -63,7 +65,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -82,7 +84,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         );
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -95,7 +97,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE));
     }
 
-    public function it_acknowledges_a_message()
+    public function it_acknowledges_a_message(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -110,12 +112,12 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->acknowledgeMessage(self::QUEUE, $message);
     }
 
-    public function testItPeeksAQueue()
+    public function testItPeeksAQueue(): void
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    public function testItExposesInfo()
+    public function testItExposesInfo(): void
     {
         $this->assertEquals([], $this->driver->info());
     }

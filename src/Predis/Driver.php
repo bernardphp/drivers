@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Predis;
 
 use Predis\ClientInterface;
@@ -30,7 +32,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
         $this->redis->sAdd('queues', $queueName);
     }
@@ -46,7 +48,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $this->redis->rpush($this->resolveKey($queueName), $message);
     }
@@ -74,14 +76,14 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
     }
 
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
         $this->redis->sRem('queues', $queueName);
         $this->redis->del($this->resolveKey($queueName));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Predis\Tests;
 
 use Bernard\Driver\Predis\Driver;
@@ -25,7 +27,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->redis->reveal());
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }

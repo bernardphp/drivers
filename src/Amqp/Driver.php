@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Amqp;
 
 use PhpAmqpLib\Channel\AMQPChannel;
@@ -49,7 +51,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function createQueue($queueName)
+    public function createQueue($queueName): void
     {
         $channel = $this->getChannel();
 
@@ -71,7 +73,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function pushMessage($queueName, $message)
+    public function pushMessage($queueName, $message): void
     {
         $amqpMessage = new AMQPMessage($message, $this->defaultMessageProperties);
 
@@ -102,7 +104,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage($queueName, $receipt): void
     {
         $this->getChannel()->basic_ack($receipt);
     }
@@ -118,7 +120,7 @@ final class Driver implements \Bernard\Driver
     /**
      * {@inheritdoc}
      */
-    public function removeQueue($queueName)
+    public function removeQueue($queueName): void
     {
         $this->getChannel()->queue_delete($queueName);
     }

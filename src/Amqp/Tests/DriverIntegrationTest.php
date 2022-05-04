@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Amqp\Tests;
 
 use Bernard\Driver\Amqp\Driver;
@@ -73,12 +75,12 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      * @param string $queue
      * @param string $message
      */
-    private function publish($queue = self::QUEUE, $message = self::MESSAGE)
+    private function publish($queue = self::QUEUE, $message = self::MESSAGE): void
     {
         $this->channel->basic_publish(new AMQPMessage($message), self::EXCHANGE, $queue);
     }
 
-    public function testItCreatesAQueue()
+    public function testItCreatesAQueue(): void
     {
         $queue = 'other-queue';
 
@@ -93,7 +95,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message->body);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $count = 3;
 
@@ -107,7 +109,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($count, $this->driver->countMessages(self::QUEUE));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
 
@@ -121,7 +123,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message->body);
     }
 
-    public function testItPushesAMessageToAQueueWithProperties()
+    public function testItPushesAMessageToAQueueWithProperties(): void
     {
         $properties = ['content_type' => 'text'];
 
@@ -140,7 +142,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($properties, $message->get_properties());
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $this->publish();
 
@@ -151,12 +153,12 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals([self::MESSAGE, '1'], $this->driver->popMessage(self::QUEUE));
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
     }
 
-    public function testItAcknowledgesAMessage()
+    public function testItAcknowledgesAMessage(): void
     {
         $this->publish();
 
@@ -179,7 +181,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(1, $result);
     }
 
-    public function testItRemovesAQueue()
+    public function testItRemovesAQueue(): void
     {
         $this->skipCleanup = true;
 
