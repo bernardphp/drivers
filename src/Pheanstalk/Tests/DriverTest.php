@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Bernard\Driver\Pheanstalk\Tests;
 
 use Bernard\Driver\Pheanstalk\Driver;
-use Pheanstalk\PheanstalkInterface;
+use Pheanstalk\Contract\PheanstalkInterface;
 use Prophecy\Prophecy\ObjectProphecy;
 
 final class DriverTest extends \PHPUnit\Framework\TestCase
 {
+    use \Prophecy\PhpUnit\ProphecyTrait;
+
     /**
      * @var PheanstalkInterface|ObjectProphecy
      */

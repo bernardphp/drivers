@@ -35,7 +35,7 @@
         "ext-redis": "*",
         "aws/aws-sdk-php": "^3.20",
         "iron-io/iron_mq": "^4.0",
-        "pda/pheanstalk": "^3.0",
+        "pda/pheanstalk": "^4.0",
         "php-amqplib/php-amqplib": "^3.2",
         "phpspec/prophecy": "^1.6.0",
         "phpspec/prophecy-phpunit": "^2.0",
