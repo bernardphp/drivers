@@ -6,79 +6,9 @@ parameters:
 			path: src/Amqp/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Driver.php
-
-		-
 			message: "#^Parameter \\#1 \\$delivery_tag of method PhpAmqpLib\\\\Channel\\\\AMQPChannel\\:\\:basic_ack\\(\\) expects string, mixed given\\.$#"
 			count: 1
 			path: src/Amqp/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:publish\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItAcknowledgesAMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCreatesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueueWithProperties\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverIntegrationTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverIntegrationTest.php
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
@@ -92,26 +22,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method Prophecy\\\\Prophecy\\\\ObjectProphecy\\:\\:close\\(\\)\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverTest\\:\\:testItExposesInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Amqp/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Amqp\\\\Tests\\\\DriverTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/Amqp/Tests/DriverTest.php
 
@@ -131,46 +41,6 @@ parameters:
 			path: src/AppEngine/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:countMessages\\(\\) should return int but return statement is missing\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:popMessage\\(\\) should return array but return statement is missing\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
-			message: "#^Property Bernard\\\\Driver\\\\AppEngine\\\\Driver\\:\\:\\$queueMap has no type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Driver.php
-
-		-
 			message: "#^Access to static property \\$messages on an unknown class google\\\\appengine\\\\api\\\\taskqueue\\\\PushTask\\.$#"
 			count: 5
 			path: src/AppEngine/Tests/DriverTest.php
@@ -181,27 +51,7 @@ parameters:
 			path: src/AppEngine/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testItQueuesPushTask\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testItUsesDefaultEndpointWhenAliasArentThere\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\DriverTest\\:\\:testListQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Tests/DriverTest.php
-
-		-
 			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:__construct\\(\\) has parameter \\$url_path with no type specified\\.$#"
-			count: 1
-			path: src/AppEngine/Tests/Fixtures/PushTask.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\AppEngine\\\\Tests\\\\Fixtures\\\\PushTask\\:\\:add\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/AppEngine/Tests/Fixtures/PushTask.php
 
@@ -231,32 +81,12 @@ parameters:
 			path: src/AppEngine/Tests/Fixtures/PushTask.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot access property \\$size on mixed\\.$#"
 			count: 1
 			path: src/IronMQ/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Driver.php
-
-		-
-			message: "#^Property Bernard\\\\Driver\\\\IronMQ\\\\Driver\\:\\:\\$ironmq has no type specified\\.$#"
+			message: "#^Parameter \\#2 \\$count of method IronMQ\\\\IronMQ\\:\\:reserveMessages\\(\\) expects int, int\\|null given\\.$#"
 			count: 1
 			path: src/IronMQ/Driver.php
 
@@ -301,6 +131,16 @@ parameters:
 			path: src/IronMQ/Tests/DriverTest.php
 
 		-
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 3
+			path: src/IronMQ/Tests/DriverTest.php
+
+		-
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 3
+			path: src/IronMQ/Tests/DriverTest.php
+
+		-
 			message: "#^Cannot call method shouldBeCalled\\(\\) on mixed\\.$#"
 			count: 3
 			path: src/IronMQ/Tests/DriverTest.php
@@ -316,92 +156,37 @@ parameters:
 			path: src/IronMQ/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItAcknowledgesAMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItExposesInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItPrefetchesMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\IronMQ\\\\Tests\\\\DriverTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/IronMQ/Tests/DriverTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$ironmq of class Bernard\\\\Driver\\\\IronMQ\\\\Driver constructor expects IronMQ\\\\IronMQ, object given\\.$#"
 			count: 2
 			path: src/IronMQ/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method object\\:\\:getArrayCopy\\(\\)\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method object\\:\\:getData\\(\\)\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot access offset 'current\\-jobs\\-ready' on object\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
+			message: "#^If condition is always true\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#1 \\$job of method Pheanstalk\\\\PheanstalkInterface\\:\\:delete\\(\\) expects object, mixed given\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
 		-
-			message: "#^Property Bernard\\\\Driver\\\\Pheanstalk\\\\Driver\\:\\:\\$pheanstalk has no type specified\\.$#"
+			message: "#^Unreachable statement \\- code above always terminates\\.$#"
 			count: 1
 			path: src/Pheanstalk/Driver.php
 
@@ -416,49 +201,14 @@ parameters:
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItAcknowledgesAMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot access offset 0 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 1
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
+			message: "#^Cannot access offset 1 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 2
 			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItExposesInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverIntegrationTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Pheanstalk\\\\Tests\\\\DriverTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Pheanstalk/Tests/DriverTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$pheanstalk of class Bernard\\\\Driver\\\\Pheanstalk\\\\Driver constructor expects Pheanstalk\\\\PheanstalkInterface, object given\\.$#"
@@ -466,32 +216,47 @@ parameters:
 			path: src/Pheanstalk/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\ClientInterface\\:\\:lLen\\(\\)\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\ClientInterface\\:\\:lRange\\(\\)\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\ClientInterface\\:\\:sAdd\\(\\)\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\ClientInterface\\:\\:sMembers\\(\\)\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\ClientInterface\\:\\:sRem\\(\\)\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
 		-
-			message: "#^Property Bernard\\\\Driver\\\\Predis\\\\Driver\\:\\:\\$redis has no type specified\\.$#"
+			message: "#^Call to an undefined method Predis\\\\Profile\\\\ProfileInterface\\:\\:defineCommand\\(\\)\\.$#"
+			count: 2
+			path: src/Predis/Driver.php
+
+		-
+			message: "#^Call to an undefined method Predis\\\\Profile\\\\ProfileInterface\\:\\:getCommandClass\\(\\)\\.$#"
+			count: 1
+			path: src/Predis/Driver.php
+
+		-
+			message: "#^Cannot use array destructuring on array\\|null\\.$#"
+			count: 1
+			path: src/Predis/Driver.php
+
+		-
+			message: "#^Parameter \\#2 \\$values of method Predis\\\\ClientInterface\\:\\:rpush\\(\\) expects array, string given\\.$#"
 			count: 1
 			path: src/Predis/Driver.php
 
@@ -501,79 +266,9 @@ parameters:
 			path: src/Predis/Tests/DriverIntegrationTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCreatesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Predis\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Predis/Tests/DriverTest.php
-
-		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Predis\\\\Driver constructor expects Predis\\\\ClientInterface, object given\\.$#"
 			count: 1
 			path: src/Predis/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Driver.php
 
 		-
 			message: "#^Parameter \\#1 \\$message of method Interop\\\\Queue\\\\PsrConsumer\\:\\:acknowledge\\(\\) expects Interop\\\\Queue\\\\PsrMessage, mixed given\\.$#"
@@ -612,21 +307,6 @@ parameters:
 
 		-
 			message: "#^Cannot call method willReturn\\(\\) on int\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/AmqpDriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\AmqpDriverTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/AmqpDriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\AmqpDriverTest\\:\\:testItCreatesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/AmqpDriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\AmqpDriverTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/AmqpDriverTest.php
 
@@ -696,47 +376,12 @@ parameters:
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:it_acknowledges_a_message\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItExposesInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\QueueInterop\\\\Tests\\\\DriverTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
 			count: 1
 			path: src/QueueInterop/Tests/DriverTest.php
 
@@ -746,84 +391,24 @@ parameters:
 			path: src/QueueInterop/Tests/DriverTest.php
 
 		-
-			message: "#^Parameter \\#2 \\$duration of method Bernard\\\\Driver\\\\QueueInterop\\\\Driver\\:\\:popMessage\\(\\) expects int, float given\\.$#"
-			count: 1
-			path: src/QueueInterop/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Cannot use array destructuring on array\\|null\\.$#"
 			count: 1
 			path: src/Redis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:acknowledgeMessage\\(\\) has parameter \\$queueName with no type specified\\.$#"
 			count: 1
 			path: src/Redis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:acknowledgeMessage\\(\\) has parameter \\$receipt with no type specified\\.$#"
 			count: 1
 			path: src/Redis/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:countMessages\\(\\) should return int but returns int\\|false\\.$#"
 			count: 1
 			path: src/Redis/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Driver.php
-
-		-
-			message: "#^Property Bernard\\\\Driver\\\\Redis\\\\Driver\\:\\:\\$redis has no type specified\\.$#"
-			count: 1
-			path: src/Redis/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCreatesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverIntegrationTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Redis\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Redis/Tests/DriverTest.php
 
 		-
 			message: "#^Parameter \\#1 \\$redis of class Bernard\\\\Driver\\\\Redis\\\\Driver constructor expects Redis, object given\\.$#"
@@ -831,42 +416,52 @@ parameters:
 			path: src/Redis/Tests/DriverTest.php
 
 		-
+			message: "#^Argument of an invalid type mixed supplied for foreach, only iterables are supported\\.$#"
+			count: 2
+			path: src/Sqs/Driver.php
+
+		-
+			message: "#^Cannot access offset 'ApproximateNumberOf…' on mixed\\.$#"
+			count: 2
+			path: src/Sqs/Driver.php
+
+		-
+			message: "#^Cannot access offset 'Body' on mixed\\.$#"
+			count: 1
+			path: src/Sqs/Driver.php
+
+		-
+			message: "#^Cannot access offset 'ReceiptHandle' on mixed\\.$#"
+			count: 1
+			path: src/Sqs/Driver.php
+
+		-
+			message: "#^Cannot cast mixed to int\\.$#"
+			count: 1
+			path: src/Sqs/Driver.php
+
+		-
 			message: "#^Dead catch \\- InvalidArgumentException is never thrown in the try block\\.$#"
 			count: 1
 			path: src/Sqs/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:acknowledgeMessage\\(\\) has no return type specified\\.$#"
+			message: "#^Left side of && is always true\\.$#"
 			count: 1
 			path: src/Sqs/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:createQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Negated boolean expression is always false\\.$#"
 			count: 1
 			path: src/Sqs/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:peekQueue\\(\\) has no return type specified\\.$#"
+			message: "#^Parameter \\#1 \\$message of class Bernard\\\\Driver\\\\Message constructor expects string, mixed given\\.$#"
 			count: 1
 			path: src/Sqs/Driver.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:pushMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Driver.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:removeQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Driver.php
-
-		-
-			message: "#^Property Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:\\$queueUrls has no type specified\\.$#"
-			count: 1
-			path: src/Sqs/Driver.php
-
-		-
-			message: "#^Property Bernard\\\\Driver\\\\Sqs\\\\Driver\\:\\:\\$sqs has no type specified\\.$#"
+			message: "#^Parameter \\#2 \\$string of function explode expects string, mixed given\\.$#"
 			count: 1
 			path: src/Sqs/Driver.php
 
@@ -886,62 +481,22 @@ parameters:
 			path: src/Sqs/Tests/DriverIntegrationTest.php
 
 		-
+			message: "#^Cannot access offset 0 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Sqs/Tests/DriverIntegrationTest.php
+
+		-
 			message: "#^Cannot access offset 0 on mixed\\.$#"
 			count: 2
 			path: src/Sqs/Tests/DriverIntegrationTest.php
 
 		-
+			message: "#^Cannot access offset 1 on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 1
+			path: src/Sqs/Tests/DriverIntegrationTest.php
+
+		-
 			message: "#^If condition is always true\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:createQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:createQueue\\(\\) has parameter \\$topic with no type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItAcknowledgesAMessage\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCountsTheNumberOfMessagesInAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItCreatesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItListsQueues\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPopsMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItPushesAMessageToAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItRemovesAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverIntegrationTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverIntegrationTest\\:\\:testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/Sqs/Tests/DriverIntegrationTest.php
 
@@ -986,33 +541,13 @@ parameters:
 			path: src/Sqs/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItExposesInfo\\(\\) has no return type specified\\.$#"
-			count: 1
+			message: "#^Cannot access property \\$message on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 2
 			path: src/Sqs/Tests/DriverTest.php
 
 		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItExposesPrefetchInfo\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItIsADriver\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItListsQueuesFromTheInternalCache\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItPeeksAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
-			path: src/Sqs/Tests/DriverTest.php
-
-		-
-			message: "#^Method Bernard\\\\Driver\\\\Sqs\\\\Tests\\\\DriverTest\\:\\:testItPrefetchesMessagesFromAQueue\\(\\) has no return type specified\\.$#"
-			count: 1
+			message: "#^Cannot access property \\$receipt on Bernard\\\\Driver\\\\Message\\|null\\.$#"
+			count: 2
 			path: src/Sqs/Tests/DriverTest.php
 
 		-

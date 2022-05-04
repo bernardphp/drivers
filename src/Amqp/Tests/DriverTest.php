@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Amqp\Tests;
 
 use Bernard\Driver\Amqp\Driver;
@@ -23,10 +25,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $channel;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -39,22 +38,22 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->amqp->reveal(), self::EXCHANGE);
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    public function testItPeeksAQueue()
+    public function testItPeeksAQueue(): void
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    public function testItExposesInfo()
+    public function testItExposesInfo(): void
     {
         $this->assertEquals([], $this->driver->info());
     }

@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\QueueInterop;
 
+use Bernard\Driver\Message;
 use Interop\Amqp\AmqpContext;
 use Interop\Amqp\AmqpQueue;
 use Interop\Queue\PsrConsumer;
@@ -10,93 +13,27 @@ use Interop\Queue\PsrContext;
 final class Driver implements \Bernard\Driver
 {
     /**
-     * @var PsrContext
-     */
-    private $context;
-
-    /**
      * @var PsrConsumer[]
      */
-    private $consumers = [];
+    private array $consumers = [];
 
-    public function __construct(PsrContext $context)
+    public function __construct(private PsrContext $context)
     {
-        $this->context = $context;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueue($queueName)
+    public function createQueue(string $queueName): void
     {
         if ($this->context instanceof AmqpContext) {
             $this->context->declareQueue($this->createAmqpQueue($queueName));
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function countMessages($queueName)
-    {
-        if ($this->context instanceof AmqpContext) {
-            return $this->context->declareQueue($this->createAmqpQueue($queueName));
-        }
-
-        return 0;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message)
-    {
-        $queue = $this->context->createQueue($queueName);
-        $message = $this->context->createMessage($message);
-
-        $this->context->createProducer()->send($queue, $message);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5)
-    {
-        if ($message = $this->getQueueConsumer($queueName)->receive($duration * 1000)) {
-            return [$message->getBody(), $message];
-        }
-
-        return [null, null];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt)
-    {
-        $this->getQueueConsumer($queueName)->acknowledge($receipt);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeQueue($queueName)
+    public function removeQueue(string $queueName): void
     {
         if ($this->context instanceof AmqpContext) {
             $queue = $this->createAmqpQueue($queueName);
@@ -105,20 +42,48 @@ final class Driver implements \Bernard\Driver
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
+    public function pushMessage(string $queueName, string $message): void
+    {
+        $queue = $this->context->createQueue($queueName);
+        $message = $this->context->createMessage($message);
+
+        $this->context->createProducer()->send($queue, $message);
+    }
+
+    public function popMessage(string $queueName, int $duration = 5): ?Message
+    {
+        if ($message = $this->getQueueConsumer($queueName)->receive($duration * 1000)) {
+            return new Message($message->getBody(), $message);
+        }
+
+        return null;
+    }
+
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
+    {
+        $this->getQueueConsumer($queueName)->acknowledge($receipt);
+    }
+
+    public function info(): array
     {
         return [];
     }
 
-    /**
-     * @param string $queueName
-     *
-     * @return PsrConsumer
-     */
-    private function getQueueConsumer($queueName)
+    public function countMessages(string $queueName): int
+    {
+        if ($this->context instanceof AmqpContext) {
+            return $this->context->declareQueue($this->createAmqpQueue($queueName));
+        }
+
+        return 0;
+    }
+
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
+    {
+        return [];
+    }
+
+    private function getQueueConsumer(string $queueName): PsrConsumer
     {
         if (\array_key_exists($queueName, $this->consumers) === false) {
             $queue = $this->context->createQueue($queueName);
@@ -129,12 +94,7 @@ final class Driver implements \Bernard\Driver
         return $this->consumers[$queueName];
     }
 
-    /**
-     * @param string $queueName
-     *
-     * @return AmqpQueue
-     */
-    private function createAmqpQueue($queueName)
+    private function createAmqpQueue(string $queueName): AmqpQueue
     {
         /** @var AmqpContext $context */
         $context = $this->context;

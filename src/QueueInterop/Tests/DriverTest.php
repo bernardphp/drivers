@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\QueueInterop\Tests;
 
 use Bernard\Driver\QueueInterop\Driver;
@@ -20,10 +22,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $context;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -32,22 +31,22 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->context->reveal());
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $this->assertEquals([], $this->driver->listQueues());
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $this->assertSame(0, $this->driver->countMessages(self::QUEUE));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -63,7 +62,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -71,18 +70,18 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $message->getBody()->willReturn(self::MESSAGE);
 
         $consumer = $this->prophesize(PsrConsumer::class);
-        $consumer->receive(6789)->willReturn($message);
+        $consumer->receive(6000)->willReturn($message);
 
         $this->context->createQueue(self::QUEUE)->willReturn($queue);
         $this->context->createConsumer($queue)->willReturn($consumer);
 
-        $this->assertSame(
-            [self::MESSAGE, $message->reveal()],
-            $this->driver->popMessage(self::QUEUE, 6.789)
-        );
+        $driverMessage = $this->driver->popMessage(self::QUEUE, 6);
+
+        $this->assertSame(self::MESSAGE, $driverMessage->message);
+        $this->assertSame($message->reveal(), $driverMessage->receipt);
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -92,10 +91,10 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->context->createQueue(self::QUEUE)->willReturn($queue);
         $this->context->createConsumer($queue)->willReturn($consumer);
 
-        $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE));
+        $this->assertNull($this->driver->popMessage(self::QUEUE));
     }
 
-    public function it_acknowledges_a_message()
+    public function it_acknowledges_a_message(): void
     {
         $queue = $this->prophesize(PsrQueue::class);
 
@@ -110,12 +109,12 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->acknowledgeMessage(self::QUEUE, $message);
     }
 
-    public function testItPeeksAQueue()
+    public function testItPeeksAQueue(): void
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    public function testItExposesInfo()
+    public function testItExposesInfo(): void
     {
         $this->assertEquals([], $this->driver->info());
     }

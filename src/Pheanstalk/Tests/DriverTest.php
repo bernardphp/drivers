@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Pheanstalk\Tests;
 
 use Bernard\Driver\Pheanstalk\Driver;
@@ -13,10 +15,7 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $pheanstalk;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -25,12 +24,12 @@ final class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->pheanstalk->reveal());
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    public function testItPeeksAQueue()
+    public function testItPeeksAQueue(): void
     {
         $this->assertEquals([], $this->driver->peekQueue('my-queue2'));
     }

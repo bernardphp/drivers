@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Sqs\Tests;
 
 use Aws\Sqs\Exception\SqsException;
@@ -13,22 +15,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
 {
     public const MESSAGE = 'message';
 
-    /**
-     * @var SqsClient
-     */
-    private $sqs;
+    private SqsClient $sqs;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     /**
      * List of queues to clean up after running the test suite.
-     *
-     * @var array
      */
-    private $queues = [];
+    private array $queues = [];
 
     protected function setUp(): void
     {
@@ -56,18 +50,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
      * Creates a queue name for a topic, also saves the queue name in the local cleanup queue.
      * It is necessary to use less deterministic names, because Amazon limits how queue names can be reused.
      * (Have to wait 60 seconds after a queue is deleted).
-     *
-     * @param string $topic
-     *
-     * @return string
      */
-    private function queueName($topic)
+    private function queueName(string $topic): string
     {
         // PHP version is added so tests can run in parallel in CI
         return $this->queues[] = sprintf('bernard_%s_%d_%s', $topic, \PHP_VERSION_ID, uniqid());
     }
 
-    private function createQueue($topic)
+    private function createQueue(string $topic): array
     {
         $queueName = $this->queueName($topic);
 
@@ -95,7 +85,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $queue = $this->createQueue('list');
 
@@ -118,7 +108,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertLessThan($retryLimit, $retries, 'Failed asserting queue creation within the retry limit');
     }
 
-    public function testItCreatesAQueue()
+    public function testItCreatesAQueue(): void
     {
         $queue = $this->queueName('create');
 
@@ -128,7 +118,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains($queue, $result->get('QueueUrl'));
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $queue = $this->createQueue('count');
 
@@ -149,7 +139,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(2, $this->driver->countMessages($queue[0]));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $queue = $this->createQueue('push');
 
@@ -167,7 +157,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $messages[0]['Body']);
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $queue = $this->createQueue('pop');
 
@@ -182,14 +172,14 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEmpty($message[1]);
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $queue = $this->createQueue('pop_empty');
 
         $this->assertEquals([null, null], $this->driver->popMessage($queue[0], 1));
     }
 
-    public function testItAcknowledgesAMessage()
+    public function testItAcknowledgesAMessage(): void
     {
         $queue = $this->createQueue('ack');
 
@@ -218,7 +208,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(0, $result['Attributes']['ApproximateNumberOfMessages']);
     }
 
-    public function testItRemovesAQueue()
+    public function testItRemovesAQueue(): void
     {
         $queue = $this->createQueue('remove');
         $this->queues = [];

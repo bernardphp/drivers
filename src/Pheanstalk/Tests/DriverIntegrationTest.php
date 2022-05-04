@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Pheanstalk\Tests;
 
 use Bernard\Driver\Pheanstalk\Driver;
@@ -15,15 +17,9 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
     public const QUEUE = 'queue';
     public const MESSAGE = 'message';
 
-    /**
-     * @var Pheanstalk
-     */
-    private $pheanstalk;
+    private Pheanstalk $pheanstalk;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -49,7 +45,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         }
     }
 
-    public function testItListsQueues()
+    public function testItListsQueues(): void
     {
         $this->pheanstalk->putInTube('list', self::MESSAGE);
 
@@ -59,7 +55,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertContains('list', $queues);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $this->pheanstalk->putInTube(self::QUEUE, self::MESSAGE);
         $this->pheanstalk->putInTube(self::QUEUE, self::MESSAGE);
@@ -69,7 +65,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $this->driver->countMessages(self::QUEUE));
     }
 
-    public function testItPushesAMessageToAQueue()
+    public function testItPushesAMessageToAQueue(): void
     {
         $this->driver->pushMessage(self::QUEUE, self::MESSAGE);
 
@@ -78,7 +74,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $job->getData());
     }
 
-    public function testItPopsMessagesFromAQueue()
+    public function testItPopsMessagesFromAQueue(): void
     {
         $this->pheanstalk->putInTube(self::QUEUE, self::MESSAGE);
 
@@ -89,12 +85,12 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(self::MESSAGE, $message[1]->getData());
     }
 
-    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue()
+    public function testItReturnsAnEmptyMessageWhenPoppingMessagesFromAnEmptyQueue(): void
     {
         $this->assertEquals([null, null], $this->driver->popMessage(self::QUEUE, 1));
     }
 
-    public function testItAcknowledgesAMessage()
+    public function testItAcknowledgesAMessage(): void
     {
         $this->pheanstalk->putInTube(self::QUEUE, self::MESSAGE);
         $job = $this->pheanstalk->reserveFromTube(self::QUEUE, 2);
@@ -107,7 +103,7 @@ final class DriverIntegrationTest extends \PHPUnit\Framework\TestCase
         $this->pheanstalk->peek($job->getId());
     }
 
-    public function testItExposesInfo()
+    public function testItExposesInfo(): void
     {
         $info = $this->driver->info();
 

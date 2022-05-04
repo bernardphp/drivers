@@ -1,96 +1,54 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Predis;
 
+use Bernard\Driver\Message;
 use Predis\ClientInterface;
 use Predis\Command\ServerInfo;
 
-/**
- * Implements a Driver for use with https://github.com/nrk/predis.
- */
 final class Driver implements \Bernard\Driver
 {
     public const QUEUE_PREFIX = 'queue:';
 
-    private $redis;
-
-    public function __construct(ClientInterface $redis)
+    public function __construct(private ClientInterface $redis)
     {
-        $this->redis = $redis;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         return $this->redis->sMembers('queues');
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueue($queueName)
+    public function createQueue(string $queueName): void
     {
         $this->redis->sAdd('queues', $queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function countMessages($queueName)
-    {
-        return $this->redis->lLen($this->resolveKey($queueName));
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message)
-    {
-        $this->redis->rpush($this->resolveKey($queueName), $message);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5)
-    {
-        [, $message] = $this->redis->blpop($this->resolveKey($queueName), $duration) ?: null;
-
-        return [$message, null];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
-    {
-        $limit += $index - 1;
-
-        return $this->redis->lRange($this->resolveKey($queueName), $index, $limit);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt)
-    {
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeQueue($queueName)
+    public function removeQueue(string $queueName): void
     {
         $this->redis->sRem('queues', $queueName);
         $this->redis->del($this->resolveKey($queueName));
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
+    public function pushMessage(string $queueName, string $message): void
+    {
+        $this->redis->rpush($this->resolveKey($queueName), $message);
+    }
+
+    public function popMessage(string $queueName, int $duration = 5): ?Message
+    {
+        [, $message] = $this->redis->blpop($this->resolveKey($queueName), $duration) ?: null;
+
+        return new Message($message, null);
+    }
+
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
+    {
+    }
+
+    public function info(): array
     {
         // Temporarily change the command use to get info as earlier and newer redis
         // versions breaks it into sections.
@@ -104,14 +62,22 @@ final class Driver implements \Bernard\Driver
         return $info;
     }
 
+    public function countMessages(string $queueName): int
+    {
+        return $this->redis->lLen($this->resolveKey($queueName));
+    }
+
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
+    {
+        $limit += $index - 1;
+
+        return $this->redis->lRange($this->resolveKey($queueName), $index, $limit);
+    }
+
     /**
      * Transform the queueName into a key.
-     *
-     * @param string $queueName
-     *
-     * @return string
      */
-    private function resolveKey($queueName)
+    private function resolveKey(string $queueName): string
     {
         return self::QUEUE_PREFIX.$queueName;
     }

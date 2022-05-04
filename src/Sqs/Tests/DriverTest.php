@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Sqs\Tests;
 
 use Aws\ResultInterface;
@@ -7,7 +9,7 @@ use Aws\Sqs\SqsClient;
 use Bernard\Driver\Sqs\Driver;
 use Prophecy\Prophecy\ObjectProphecy;
 
-class DriverTest extends \PHPUnit\Framework\TestCase
+final class DriverTest extends \PHPUnit\Framework\TestCase
 {
     public const QUEUE = 'queue';
     public const URL = 'url';
@@ -18,10 +20,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
      */
     private $sqs;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -30,12 +29,12 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->sqs->reveal(), [self::QUEUE => self::URL]);
     }
 
-    public function testItIsADriver()
+    public function testItIsADriver(): void
     {
         $this->assertInstanceOf(\Bernard\Driver::class, $this->driver);
     }
 
-    public function testItListsQueuesFromTheInternalCache()
+    public function testItListsQueuesFromTheInternalCache(): void
     {
         $result = $this->prophesize(ResultInterface::class);
         $result->get('QueueUrls')->willReturn(null);
@@ -48,7 +47,7 @@ class DriverTest extends \PHPUnit\Framework\TestCase
         $this->assertContains(self::QUEUE, $queues);
     }
 
-    public function testItPrefetchesMessagesFromAQueue()
+    public function testItPrefetchesMessagesFromAQueue(): void
     {
         $result = $this->prophesize(ResultInterface::class);
         $result->get('Messages')->willReturn([
@@ -66,24 +65,26 @@ class DriverTest extends \PHPUnit\Framework\TestCase
 
         $message = $driver->popMessage(self::QUEUE);
 
-        $this->assertEquals([self::MESSAGE, '1'], $message);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals('1', $message->receipt);
 
         $message = $driver->popMessage(self::QUEUE, 10);
 
-        $this->assertEquals([self::MESSAGE, '2'], $message);
+        $this->assertEquals(self::MESSAGE, $message->message);
+        $this->assertEquals('2', $message->receipt);
     }
 
-    public function testItPeeksAQueue()
+    public function testItPeeksAQueue(): void
     {
         $this->assertEquals([], $this->driver->peekQueue(self::QUEUE));
     }
 
-    public function testItExposesInfo()
+    public function testItExposesInfo(): void
     {
         $this->assertEquals(['prefetch' => 2], $this->driver->info());
     }
 
-    public function testItExposesPrefetchInfo()
+    public function testItExposesPrefetchInfo(): void
     {
         $driver = new Driver($this->sqs->reveal(), [self::QUEUE => 'url'], 10);
 

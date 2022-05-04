@@ -1,55 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\Amqp;
 
+use Bernard\Driver\Message;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Connection\AbstractConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
 final class Driver implements \Bernard\Driver
 {
-    /**
-     * @var AbstractConnection
-     */
-    private $connection;
+    private ?AMQPChannel $channel = null;
 
-    /**
-     * @var AMQPChannel
-     */
-    private $channel;
-
-    /**
-     * @var string
-     */
-    private $exchange;
-
-    /**
-     * @var array
-     */
-    private $defaultMessageProperties;
-
-    /**
-     * @param string $exchange
-     */
-    public function __construct(AbstractConnection $connection, $exchange, array $defaultMessageProperties = [])
-    {
-        $this->connection = $connection;
-        $this->exchange = $exchange;
-        $this->defaultMessageProperties = $defaultMessageProperties;
+    public function __construct(
+        private AbstractConnection $connection,
+        private string $exchange,
+        private array $defaultMessageProperties = [],
+    ) {
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function listQueues()
+    public function listQueues(): array
     {
         return [];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function createQueue($queueName)
+    public function createQueue(string $queueName): void
     {
         $channel = $this->getChannel();
 
@@ -58,30 +34,19 @@ final class Driver implements \Bernard\Driver
         $channel->queue_bind($queueName, $this->exchange, $queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function countMessages($queueName)
+    public function removeQueue(string $queueName): void
     {
-        [, $messageCount] = $this->getChannel()->queue_declare($queueName, true);
-
-        return $messageCount;
+        $this->getChannel()->queue_delete($queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function pushMessage($queueName, $message)
+    public function pushMessage(string $queueName, string $message): void
     {
         $amqpMessage = new AMQPMessage($message, $this->defaultMessageProperties);
 
         $this->getChannel()->basic_publish($amqpMessage, $this->exchange, $queueName);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function popMessage($queueName, $duration = 5)
+    public function popMessage(string $queueName, int $duration = 5): ?Message
     {
         $runtime = microtime(true) + $duration;
 
@@ -89,63 +54,51 @@ final class Driver implements \Bernard\Driver
             $message = $this->getChannel()->basic_get($queueName);
 
             if ($message) {
-                return [$message->body, $message->get('delivery_tag')];
+                return new Message($message->body, $message->getDeliveryTag());
             }
 
             // sleep for 10 ms to prevent hammering CPU
             usleep(10000);
         }
 
-        return [null, null];
+        return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function acknowledgeMessage($queueName, $receipt)
+    public function acknowledgeMessage(string $queueName, mixed $receipt): void
     {
         $this->getChannel()->basic_ack($receipt);
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function peekQueue($queueName, $index = 0, $limit = 20)
-    {
-        return [];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function removeQueue($queueName)
-    {
-        $this->getChannel()->queue_delete($queueName);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function info()
-    {
-        return [];
-    }
-
     public function __destruct()
     {
-        if (null !== $this->channel) {
+        if ($this->channel !== null) {
             $this->channel->close();
         }
     }
 
+    public function info(): array
+    {
+        return [];
+    }
+
+    public function countMessages(string $queueName): int
+    {
+        [, $messageCount] = $this->getChannel()->queue_declare($queueName, true);
+
+        return $messageCount;
+    }
+
+    public function peekQueue(string $queueName, int $index = 0, int $limit = 20): array
+    {
+        return [];
+    }
+
     /**
      * Creates a channel or returns an already created one.
-     *
-     * @return AMQPChannel
      */
-    private function getChannel()
+    private function getChannel(): AMQPChannel
     {
-        if (null === $this->channel) {
+        if ($this->channel === null) {
             $this->channel = $this->connection->channel();
         }
 

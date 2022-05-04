@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Bernard\Driver\QueueInterop\Tests;
 
 use Bernard\Driver\QueueInterop\Driver;
@@ -16,10 +18,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
      */
     private $context;
 
-    /**
-     * @var Driver
-     */
-    private $driver;
+    private Driver $driver;
 
     protected function setUp(): void
     {
@@ -28,7 +27,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
         $this->driver = new Driver($this->context->reveal());
     }
 
-    public function testItCreatesAQueue()
+    public function testItCreatesAQueue(): void
     {
         $queue = $this->prophesize(AmqpQueue::class);
         $queue->addFlag(AmqpQueue::FLAG_DURABLE)->shouldBeCalled();
@@ -39,7 +38,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
         $this->driver->createQueue(self::QUEUE);
     }
 
-    public function testItCountsTheNumberOfMessagesInAQueue()
+    public function testItCountsTheNumberOfMessagesInAQueue(): void
     {
         $queue = $this->prophesize(AmqpQueue::class);
 
@@ -49,7 +48,7 @@ final class AmqpDriverTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(123, $this->driver->countMessages(self::QUEUE));
     }
 
-    public function testItRemovesAQueue()
+    public function testItRemovesAQueue(): void
     {
         $queue = $this->prophesize(AmqpQueue::class);
         $queue->addFlag(AmqpQueue::FLAG_DURABLE)->shouldBeCalled();
