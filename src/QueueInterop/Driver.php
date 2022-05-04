@@ -7,17 +7,17 @@ namespace Bernard\Driver\QueueInterop;
 use Bernard\Driver\Message;
 use Interop\Amqp\AmqpContext;
 use Interop\Amqp\AmqpQueue;
-use Interop\Queue\PsrConsumer;
-use Interop\Queue\PsrContext;
+use Interop\Queue\Consumer;
+use Interop\Queue\Context;
 
 final class Driver implements \Bernard\Driver
 {
     /**
-     * @var PsrConsumer[]
+     * @var Consumer[]
      */
     private array $consumers = [];
 
-    public function __construct(private PsrContext $context)
+    public function __construct(private Context $context)
     {
     }
 
@@ -83,7 +83,7 @@ final class Driver implements \Bernard\Driver
         return [];
     }
 
-    private function getQueueConsumer(string $queueName): PsrConsumer
+    private function getQueueConsumer(string $queueName): Consumer
     {
         if (\array_key_exists($queueName, $this->consumers) === false) {
             $queue = $this->context->createQueue($queueName);

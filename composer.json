@@ -41,8 +41,8 @@
         "phpspec/prophecy-phpunit": "^2.0",
         "phpunit/phpunit": "^9.5",
         "predis/predis": "^1.0",
-        "queue-interop/amqp-interop": "^0.6",
-        "queue-interop/queue-interop": "^0.6"
+        "queue-interop/amqp-interop": "^0.8",
+        "queue-interop/queue-interop": "^0.8"
     },
     "autoload": {
         "psr-4": {
